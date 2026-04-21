@@ -58,6 +58,12 @@
     <Filter Include="Src\Application\SceneBase">
       <UniqueIdentifier>{84787a8e-b280-451f-a020-29383149d27e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\Game\GameScene">
+      <UniqueIdentifier>{913c7ce3-90e1-43b1-b889-0433f72411df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\Game\GameScene\Start">
+      <UniqueIdentifier>{348a4b61-a52a-4e4d-b406-0e7f6684bc1a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -168,6 +174,12 @@
     <ClInclude Include="Src\Application\SceneBase\SceneBase.h">
       <Filter>Src\Application\SceneBase</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\Game\GameScene\GameSceneBase.h">
+      <Filter>Src\Application\Game\GameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Game\GameScene\Start\Start.h">
+      <Filter>Src\Application\Game\GameScene\Start</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -244,6 +256,9 @@
     </ClCompile>
     <ClCompile Include="Src\Application\Game\Player\Player.cpp">
       <Filter>Src\Application\Game\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Game\GameScene\Start\Start.cpp">
+      <Filter>Src\Application\Game\GameScene\Start</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
