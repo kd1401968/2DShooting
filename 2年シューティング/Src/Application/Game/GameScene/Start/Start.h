@@ -13,4 +13,9 @@ public:
 	void Draw() override;
 
 private:
+
+	KdTexture m_BackTex;
+	Math::Matrix m_BackMat;
+
+	Math::Vector2 m_BackPos;
 };

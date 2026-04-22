@@ -7,14 +7,15 @@ public:
 	c_GameSceneBase *m_NowScene;
 
 	c_Player() {}
-	~c_Player() {}
+	~c_Player() { Release(); }
 
 	void Init();
 	void Update();
 	void Draw();
-	void Release();
 
 
 
 private:
+
+	void Release();
 };
