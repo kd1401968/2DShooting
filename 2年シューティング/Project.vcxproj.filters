@@ -64,6 +64,18 @@
     <Filter Include="Src\Application\Game\GameScene\Start">
       <UniqueIdentifier>{348a4b61-a52a-4e4d-b406-0e7f6684bc1a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\Game\GameUI">
+      <UniqueIdentifier>{76db1e32-6032-4840-a342-1eefac6c98c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\Game\GameObject">
+      <UniqueIdentifier>{664ddc71-0635-46d7-a5d5-d7508870148f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\Game\GameObject\Bullet">
+      <UniqueIdentifier>{7ab78eff-cfca-41d6-861e-17155ad7d912}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\Game\GameObject\Bullet\PBullet">
+      <UniqueIdentifier>{b024c650-056c-4c75-b711-10f98606905b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -180,6 +192,15 @@
     <ClInclude Include="Src\Application\Game\GameScene\Start\Start.h">
       <Filter>Src\Application\Game\GameScene\Start</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\Game\GameUI\GameUI.h">
+      <Filter>Src\Application\Game\GameUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Game\GameObject\Bullet\PBullet\PBullet.h">
+      <Filter>Src\Application\Game\GameObject\Bullet\PBullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Game\GameObject\GameObjectBase.h">
+      <Filter>Src\Application\Game\GameObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -259,6 +280,12 @@
     </ClCompile>
     <ClCompile Include="Src\Application\Game\GameScene\Start\Start.cpp">
       <Filter>Src\Application\Game\GameScene\Start</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Game\GameUI\GameUI.cpp">
+      <Filter>Src\Application\Game\GameUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Game\GameObject\Bullet\PBullet\PBullet.cpp">
+      <Filter>Src\Application\Game\GameObject\Bullet\PBullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

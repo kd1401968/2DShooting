@@ -160,8 +160,11 @@
     <ClInclude Include="..\Library\tinygltf\stb_image_write.h" />
     <ClInclude Include="..\Library\tinygltf\tiny_gltf.h" />
     <ClInclude Include="Src\Application\Game\Game.h" />
+    <ClInclude Include="Src\Application\Game\GameObject\Bullet\PBullet\PBullet.h" />
+    <ClInclude Include="Src\Application\Game\GameObject\GameObjectBase.h" />
     <ClInclude Include="Src\Application\Game\GameScene\GameSceneBase.h" />
     <ClInclude Include="Src\Application\Game\GameScene\Start\Start.h" />
+    <ClInclude Include="Src\Application\Game\GameUI\GameUI.h" />
     <ClInclude Include="Src\Application\Game\Player\Player.h" />
     <ClInclude Include="Src\Application\Result\Result.h" />
     <ClInclude Include="Src\Application\Scene.h" />
@@ -192,7 +195,9 @@
     <ClCompile Include="..\Library\imgui\imgui_impl_win32.cpp" />
     <ClCompile Include="..\Library\imgui\imgui_widgets.cpp" />
     <ClCompile Include="Src\Application\Game\Game.cpp" />
+    <ClCompile Include="Src\Application\Game\GameObject\Bullet\PBullet\PBullet.cpp" />
     <ClCompile Include="Src\Application\Game\GameScene\Start\Start.cpp" />
+    <ClCompile Include="Src\Application\Game\GameUI\GameUI.cpp" />
     <ClCompile Include="Src\Application\Game\Player\Player.cpp" />
     <ClCompile Include="Src\Application\Result\Result.cpp" />
     <ClCompile Include="Src\Application\Scene.cpp" />

@@ -1,14 +1,14 @@
 #pragma once
 #include "Application/SceneBase/SceneBase.h"
 #include "Application/Game/GameScene/GameSceneBase.h"
-enum GameSceneType
-{
-	Start,
-	Stage1,
-	Stage2,
-	Clear,
-	GameOver,
-};
+//enum GameSceneType
+//{
+//	Start,
+//	Stage1,
+//	Stage2,
+//	Clear,
+//	GameOver,
+//};
 class c_Game :public c_SceneBase
 {
 public:
@@ -27,7 +27,12 @@ public:
 	void Draw() override;
 
 	void ChangeScene(c_GameSceneBase* next);
-	c_GameSceneBase SetScene() { return *mp_NowGameScene; }
+
+	GameSceneType GetNowSceneType() const {
+		if (mp_NowGameScene == nullptr) return GameSceneType::Start; // ‰Šú’l‚È‚Ç
+		return mp_NowGameScene->GetSceneType();
+	}
+
 
 private:
 };

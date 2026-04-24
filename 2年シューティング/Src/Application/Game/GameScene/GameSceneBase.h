@@ -1,4 +1,13 @@
 #pragma once
+enum GameSceneType
+{
+	Start,
+	Stage1,
+	Stage2,
+	Clear,
+	GameOver,
+};
+
 class c_GameSceneBase
 {
 public:
@@ -8,4 +17,7 @@ public:
 	virtual void Release() {}	//‰ğ•úˆ—
 	virtual void Update() {}	//XVˆ—
 	virtual void Draw() {}		//•`‰æˆ—
+
+	virtual GameSceneType GetSceneType() const = 0;
+
 };

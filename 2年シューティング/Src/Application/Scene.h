@@ -46,6 +46,10 @@ public:
 	void TransitionUpdate();	//‰æ–ÊØ‚è‘Ö‚¦XVˆ—
 	void TransitionDraw();		//‰æ–ÊØ‚è‘Ö‚¦•`‰æˆ—
 
+	c_SceneBase* GetNowScene() const { return mp_NowScene; }
+
+
+
 private:
 
 	Scene() {}
