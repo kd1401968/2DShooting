@@ -161,8 +161,10 @@
     <ClInclude Include="..\Library\tinygltf\tiny_gltf.h" />
     <ClInclude Include="Src\Application\Game\Game.h" />
     <ClInclude Include="Src\Application\Game\GameObject\Bullet\PBullet\PBullet.h" />
+    <ClInclude Include="Src\Application\Game\GameObject\Enemy\Ghost\Ghost.h" />
     <ClInclude Include="Src\Application\Game\GameObject\GameObjectBase.h" />
     <ClInclude Include="Src\Application\Game\GameScene\GameSceneBase.h" />
+    <ClInclude Include="Src\Application\Game\GameScene\Stage1\Stage1.h" />
     <ClInclude Include="Src\Application\Game\GameScene\Start\Start.h" />
     <ClInclude Include="Src\Application\Game\GameUI\GameUI.h" />
     <ClInclude Include="Src\Application\Game\Player\Player.h" />
@@ -196,6 +198,8 @@
     <ClCompile Include="..\Library\imgui\imgui_widgets.cpp" />
     <ClCompile Include="Src\Application\Game\Game.cpp" />
     <ClCompile Include="Src\Application\Game\GameObject\Bullet\PBullet\PBullet.cpp" />
+    <ClCompile Include="Src\Application\Game\GameObject\Enemy\Ghost\Ghost.cpp" />
+    <ClCompile Include="Src\Application\Game\GameScene\Stage1\Stage1.cpp" />
     <ClCompile Include="Src\Application\Game\GameScene\Start\Start.cpp" />
     <ClCompile Include="Src\Application\Game\GameUI\GameUI.cpp" />
     <ClCompile Include="Src\Application\Game\Player\Player.cpp" />

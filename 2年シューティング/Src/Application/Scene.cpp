@@ -1,6 +1,7 @@
 #include "main.h"
 #include "Scene.h"
 #include "Application/Title/Title.h"
+#include "Application/Game/Game.h"
 void Scene::Draw2D()
 {
 	//シーンの更新処理
@@ -23,7 +24,7 @@ void Scene::Init()
 {
 	TransitionInit();
 
-	mp_NowScene = new c_Title();
+	mp_NowScene = new c_Game();
 	mp_NowScene->Init();
 }
 

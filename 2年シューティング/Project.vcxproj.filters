@@ -76,6 +76,15 @@
     <Filter Include="Src\Application\Game\GameObject\Bullet\PBullet">
       <UniqueIdentifier>{b024c650-056c-4c75-b711-10f98606905b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\Game\GameScene\Stage1">
+      <UniqueIdentifier>{92a7830d-75e9-4576-a1dd-cb59bcbf96cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\Game\GameObject\Enemy">
+      <UniqueIdentifier>{f19a981d-12c0-4aaa-a257-a3478e633e0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\Game\GameObject\Enemy\Ghost">
+      <UniqueIdentifier>{d031ee0e-9106-410f-a3a3-117d245a9862}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -201,6 +210,12 @@
     <ClInclude Include="Src\Application\Game\GameObject\GameObjectBase.h">
       <Filter>Src\Application\Game\GameObject</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\Game\GameScene\Stage1\Stage1.h">
+      <Filter>Src\Application\Game\GameScene\Stage1</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Game\GameObject\Enemy\Ghost\Ghost.h">
+      <Filter>Src\Application\Game\GameObject\Enemy\Ghost</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -286,6 +301,12 @@
     </ClCompile>
     <ClCompile Include="Src\Application\Game\GameObject\Bullet\PBullet\PBullet.cpp">
       <Filter>Src\Application\Game\GameObject\Bullet\PBullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Game\GameScene\Stage1\Stage1.cpp">
+      <Filter>Src\Application\Game\GameScene\Stage1</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Game\GameObject\Enemy\Ghost\Ghost.cpp">
+      <Filter>Src\Application\Game\GameObject\Enemy\Ghost</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

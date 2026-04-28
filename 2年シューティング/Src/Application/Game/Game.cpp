@@ -1,8 +1,9 @@
 #include "Game.h"
 #include "GameScene/Start/Start.h"
+#include "GameScene/Stage1/Stage1.h"
 void c_Game::Init()
 {
-	mp_NowGameScene = new c_Start;
+	mp_NowGameScene = new c_Stage1;
 	mp_NowGameScene->Init();
 }
 

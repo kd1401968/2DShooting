@@ -1,21 +1,21 @@
 #pragma once
 #include "Application/Game/GameObject/GameObjectBase.h"
-class c_PBullet :public c_GameObjectBase
+class c_Ghost :public c_GameObjectBase
 {
 public:
-	c_PBullet(Math::Vector2 Pos,int LR) { Init(Pos,LR); }
-	~c_PBullet() override{ Release(); }
+	c_Ghost(Math::Vector2 Pos) { Init(Pos); }
+	~c_Ghost() override{ Release(); }
 
-	
+
 	void Update()override;
 	void Draw()override;
 
 	bool GetFlg() { return m_Flg; }
-	
+
 
 private:
 
-	void Init(Math::Vector2 Pos,int LR);
+	void Init(Math::Vector2 Pos);
 	void Release()override;
 
 	KdTexture m_Tex;
@@ -25,4 +25,6 @@ private:
 	bool m_Flg;
 	float m_RectX;
 	int m_LR;
+	Math::Vector2 m_Radius;
+	Math::Vector2 m_Scale;
 };

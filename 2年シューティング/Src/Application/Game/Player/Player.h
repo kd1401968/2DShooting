@@ -35,4 +35,6 @@ private:
 	float m_AttackRect;
 	bool m_Alive;
 	int m_Interval;
+	int m_Count;
+	Math::Vector2 m_Radius;
 };

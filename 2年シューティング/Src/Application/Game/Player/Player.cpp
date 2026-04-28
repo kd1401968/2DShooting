@@ -15,6 +15,8 @@ void c_Player::Init()
 	m_Rect = 0.0f;
 	m_AttackRect = 0.0f;
 	m_Interval = 0;
+	m_Count = 24;
+	m_Radius = { 35.0f,30.0 };
 }
 void c_Player::Update()
 {
@@ -35,6 +37,11 @@ void c_Player::Update()
 			m_Pos.y -= m_Speed;
 		}
 
+		if (m_Pos.x > (640 - m_Radius.x))	m_Pos.x = (640 - m_Radius.x);
+		if (m_Pos.x < (-640 + m_Radius.x))	m_Pos.x = (-640 + m_Radius.x);
+		if (m_Pos.y > (360 - m_Radius.y))	m_Pos.y = (360 - m_Radius.y);
+		if (m_Pos.y < ( - 280 + m_Radius.y))m_Pos.y = (-280 + m_Radius.y);
+
 		m_Rect += 0.13;
 		if (m_Rect >= 4.0f) {
 			m_Rect == 0.0f;
@@ -42,20 +49,54 @@ void c_Player::Update()
 
 		if (m_Interval == 0) {
 			if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
-				mp_Bullet.push_back(new c_PBullet(m_Pos, m_LR));
-				m_Interval = 32;
+				m_Interval++;
+				m_AttackRect = 0;
 			}
 		}
 
-		if (m_Interval > 0) {
+		if (m_Count >=m_Interval && m_Interval >= 1)
+		{
+			int step = m_Count / 8;  // 8分割（m_Count が大きいほど step も大きくなる）
+
+			// 次のフレームへ
+			m_Interval++;
+
+			if (step < m_Interval) {
+
+				// アニメーション進行
+				if (m_Interval % step == 0) {
+					m_AttackRect++;
+				}
+
+				// ③ 弾を撃つタイミング（3/8）
+				if (m_Interval == step * 3) {
+					mp_Bullet.push_back(new c_PBullet(m_Pos, m_LR));
+				}
+
+				// ④ モーション終了 → リセット
+				if (m_Interval >= m_Count) {
+					m_Interval = 0;
+					m_AttackRect = 0;
+				}
+			}
+
+		}
+
+
+
+		/*if (m_Interval > 0) {
 			if (m_Interval % 4 == 0)m_AttackRect += 1.0f;
 			m_Interval--;
+			if (m_Interval==4)
+			{
+				mp_Bullet.push_back(new c_PBullet(m_Pos, m_LR));
+			}
 			if (m_Interval < 0)
 			{
 				m_Interval = 0;
 				m_AttackRect = 0;
 			}
-		}
+		}*/
 
 		c_Game* game = dynamic_cast<c_Game*>(SCENE.GetNowScene());
 		if (game != nullptr) {
