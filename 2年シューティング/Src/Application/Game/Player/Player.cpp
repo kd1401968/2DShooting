@@ -152,6 +152,11 @@ void c_Player::Draw()
 	}
 }
 
+void c_Player::SetBulletFlg(bool flg,int i)
+{
+	 mp_Bullet[i]->SetFlg(flg);
+}
+
 void c_Player::Release()
 {
 	m_Tex.Release();

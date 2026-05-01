@@ -10,7 +10,10 @@ public:
 	void Update()override;
 	void Draw()override;
 
+	Math::Vector2 GetPos() { return m_Pos; }
+	Math::Vector2 GetRadius() { return { 35.0f,30.0f }; }
 	bool GetFlg() { return m_Flg; }
+	void SetFlg(bool &Flg) { m_Flg = Flg; }
 
 
 private:

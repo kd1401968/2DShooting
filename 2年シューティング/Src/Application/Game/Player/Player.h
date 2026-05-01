@@ -18,6 +18,7 @@ public:
 	int SetLife() { return m_Life; }
 	int SetLR() { return m_LR; }
 	bool SetAlive() { return m_Alive; }
+	void SetBulletFlg(bool flg,int i);
 
 private:
 

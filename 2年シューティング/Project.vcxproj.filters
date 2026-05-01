@@ -85,6 +85,12 @@
     <Filter Include="Src\Application\Game\GameObject\Enemy\Ghost">
       <UniqueIdentifier>{d031ee0e-9106-410f-a3a3-117d245a9862}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\Game\GameObject\Hit">
+      <UniqueIdentifier>{2b147ae3-0512-4172-a3fc-445e1398d049}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\Game\GameObject\Explosion">
+      <UniqueIdentifier>{4d9b8671-4152-4ec2-b5a0-d538d8ca41b3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -216,6 +222,12 @@
     <ClInclude Include="Src\Application\Game\GameObject\Enemy\Ghost\Ghost.h">
       <Filter>Src\Application\Game\GameObject\Enemy\Ghost</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\Game\GameObject\Hit\Hit.h">
+      <Filter>Src\Application\Game\GameObject\Hit</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Game\GameObject\Explosion\Explosion.h">
+      <Filter>Src\Application\Game\GameObject\Explosion</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -307,6 +319,12 @@
     </ClCompile>
     <ClCompile Include="Src\Application\Game\GameObject\Enemy\Ghost\Ghost.cpp">
       <Filter>Src\Application\Game\GameObject\Enemy\Ghost</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Game\GameObject\Hit\Hit.cpp">
+      <Filter>Src\Application\Game\GameObject\Hit</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Game\GameObject\Explosion\Explosion.cpp">
+      <Filter>Src\Application\Game\GameObject\Explosion</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

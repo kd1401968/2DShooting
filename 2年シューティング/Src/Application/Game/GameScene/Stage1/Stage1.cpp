@@ -2,6 +2,8 @@
 #include "Application/Game/Player/Player.h"
 #include "Application/Game/GameUI/GameUI.h"
 #include "Application/Game/GameObject/Enemy/Ghost/Ghost.h"
+#include "Application/Game/GameObject/Bullet/PBullet/PBullet.h"
+#include "Application/Game/GameObject/Explosion/Explosion.h"
 void c_Stage1::Init()
 {
 	m_BackTex.Load("Texture/NightForest/Image without mist.png");
@@ -38,6 +40,28 @@ void c_Stage1::Update()
 		mp_Ghost.push_back(new c_Ghost(GhostPos));
 	}
 
+	for (int i = 0; i < m_Player->mp_Bullet.size(); i++)
+	{
+		bool Hit=true;
+		for (int j = 0; j < mp_Ghost.size(); j++)
+		{
+			Math::Vector2 BulletPos = m_Player->mp_Bullet[i]->GetPos();
+			Math::Vector2 GhostPos = mp_Ghost[j]->GetPos();
+
+			Hit=m_Hit.BulletHit(BulletPos, GhostPos, m_Player->mp_Bullet[i]->GetRadius(), mp_Ghost[j]->GetRadius());
+
+			if (!Hit)
+			{
+				m_Player->SetBulletFlg(Hit, i);
+				mp_Ghost[j]->SetFlg(Hit);
+				mp_Explosion.push_back(new c_Explosion());
+				mp_Explosion.back()->Init(GhostPos);
+				break;
+			}
+		}
+		if (!Hit)continue;
+	}
+
 	for (int i = 0; i < mp_Ghost.size(); i++) {
 		mp_Ghost[i]->Update();
 	}
@@ -48,6 +72,23 @@ void c_Stage1::Update()
 		{
 			delete* it;
 			it = mp_Ghost.erase(it);
+		}
+		else
+		{
+			++it;
+		}
+	}
+	
+	for (int i = 0; i < mp_Explosion.size(); i++) {
+		mp_Explosion[i]->Update();
+	}
+
+	for (auto it = mp_Explosion.begin(); it != mp_Explosion.end(); )
+	{
+		if (!(*it)->GetFlg())
+		{
+			delete* it;
+			it = mp_Explosion.erase(it);
 		}
 		else
 		{
@@ -77,6 +118,10 @@ void c_Stage1::Draw()
 
 	for (int i = 0; i < mp_Ghost.size(); i++) {
 		mp_Ghost[i]->Draw();
+	}
+
+	for (int i = 0; i < mp_Explosion.size(); i++) {
+		mp_Explosion[i]->Draw();
 	}
 
 	m_GameUI->Draw();
