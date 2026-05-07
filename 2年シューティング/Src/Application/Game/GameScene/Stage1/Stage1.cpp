@@ -33,7 +33,7 @@ void c_Stage1::Release()
 void c_Stage1::Update()
 {
 	m_Player->Update();
-	m_GameUI->Update(m_Player->SetLife());
+	m_GameUI->Update(m_Player->GetLife());
 
 	if (rand() % 10 == 0) {
 		Math::Vector2 GhostPos = { 640.0f+64.0f,(float)((rand() % 537)-238)};
@@ -58,6 +58,25 @@ void c_Stage1::Update()
 				mp_Explosion.back()->Init(GhostPos);
 				break;
 			}
+		}
+		if (!Hit)continue;
+	}
+
+	for (int i = 0; i < mp_Ghost.size(); i++)
+	{
+		bool Hit = true;
+		Math::Vector2 PlayerPos = m_Player->GetPos();
+		Math::Vector2 GhostPos = mp_Ghost[i]->GetPos();
+
+		Hit = m_Hit.BulletHit(PlayerPos, GhostPos, m_Player->GetRadius(), mp_Ghost[i]->GetRadius());
+
+		if (!Hit)
+		{
+			m_Player->SetLife();
+			mp_Ghost[i]->SetFlg(Hit);
+			mp_Explosion.push_back(new c_Explosion());
+			mp_Explosion.back()->Init(GhostPos);
+			break;
 		}
 		if (!Hit)continue;
 	}

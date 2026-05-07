@@ -25,7 +25,7 @@ void c_Start::Release()
 void c_Start::Update()
 {
 	m_Player->Update();
-	m_GameUI->Update(m_Player->SetLife());
+	m_GameUI->Update(m_Player->GetLife());
 
 	Math::Matrix S, R, T;
 	S = Math::Matrix::CreateScale(2.07, 2, 1);

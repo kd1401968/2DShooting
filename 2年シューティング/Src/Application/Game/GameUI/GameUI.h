@@ -4,7 +4,7 @@ class c_GameUI
 public:
 
 	c_GameUI() {}
-	~c_GameUI() {}
+	~c_GameUI() { Release(); }
 
 	void Init();
 	void Update(int i);
@@ -12,5 +12,13 @@ public:
 
 private:
 
+	
 	void Release();
+
+	static const int LIFE_MAX = 3;
+	KdTexture m_LifeTex;
+	Math::Matrix m_LifeMat[LIFE_MAX];
+	bool m_LifeFlg[LIFE_MAX];
+	Math::Vector2 m_LifePos[LIFE_MAX];
+	float m_LifeScale;
 };

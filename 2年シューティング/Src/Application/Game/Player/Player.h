@@ -15,10 +15,13 @@ public:
 	void Update();
 	void Draw();
 
-	int SetLife() { return m_Life; }
-	int SetLR() { return m_LR; }
-	bool SetAlive() { return m_Alive; }
+	int GetLife() { return m_Life; }
+	int GetLR() { return m_LR; }
+	bool GetAlive() { return m_Alive; }
 	void SetBulletFlg(bool flg,int i);
+	Math::Vector2 GetPos() { return m_Pos; }
+	Math::Vector2 GetRadius() { return m_Radius; }
+	void SetLife() { m_Life--; if (m_Life <= 0) { m_Alive = false; } }
 
 private:
 
@@ -29,7 +32,7 @@ private:
 	KdTexture m_AttackTex;
 	Math::Matrix m_Mat;
 	float m_Scale;
-	float m_Speed;
+	Math::Vector2 m_Speed;
 	int m_Life;
 	int m_LR;
 	float m_Rect;

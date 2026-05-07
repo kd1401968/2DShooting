@@ -11,7 +11,7 @@ public:
 	void Draw()override;
 
 	Math::Vector2 GetPos(){ return m_Pos; }
-	Math::Vector2 GetRadius() { return { 32.0f,32.0f }; }
+	Math::Vector2 GetRadius() { return { 18.0f,14.0f }; }
 	bool GetFlg() { return m_Flg; }
 	void SetFlg(bool Flg) { m_Flg = Flg; }
 	

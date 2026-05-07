@@ -10,7 +10,7 @@ void c_Player::Init()
 	m_Alive = true;
 	m_Life = 3;
 	m_Pos = { 0.0f,30.0f };
-	m_Speed = 5.0f;
+	m_Speed = { 0.0f,0.0f };
 	m_LR = -1;
 	m_Rect = 0.0f;
 	m_AttackRect = 0.0f;
@@ -23,19 +23,35 @@ void c_Player::Update()
 	if (m_Alive == 1) {
 		//自機の移動
 		if (GetAsyncKeyState(VK_RIGHT) & 0x8000 || GetAsyncKeyState('D') & 0x8000) {
-			m_Pos.x+= m_Speed;
 			m_LR = -1;
+			m_Speed.x = 1.0f;
 		}
-		if (GetAsyncKeyState(VK_LEFT) & 0x8000 || GetAsyncKeyState('A') & 0x8000) {
-			m_Pos.x -= m_Speed;
+		else if (GetAsyncKeyState(VK_LEFT) & 0x8000 || GetAsyncKeyState('A') & 0x8000) {
+			m_Speed.x = -1.0f;
 			m_LR = 1;
 		}
+		else
+		{
+			m_Speed.x = 0.0f;
+		}
 		if (GetAsyncKeyState(VK_UP) & 0x8000 || GetAsyncKeyState('W') & 0x8000) {
-			m_Pos.y += m_Speed;
+			m_Speed.y = 1.0f;
 		}
-		if (GetAsyncKeyState(VK_DOWN) & 0x8000 || GetAsyncKeyState('S') & 0x8000) {
-			m_Pos.y -= m_Speed;
+		else if (GetAsyncKeyState(VK_DOWN) & 0x8000 || GetAsyncKeyState('S') & 0x8000) {
+			m_Speed.y = -1.0f;
 		}
+		else
+		{
+			m_Speed.y = 0.0f;
+		}
+
+		m_Speed.Normalize();
+
+		m_Speed *= 5.0f;
+
+		m_Pos += m_Speed;
+
+
 
 		if (m_Pos.x > (640 - m_Radius.x))	m_Pos.x = (640 - m_Radius.x);
 		if (m_Pos.x < (-640 + m_Radius.x))	m_Pos.x = (-640 + m_Radius.x);
@@ -82,27 +98,11 @@ void c_Player::Update()
 
 		}
 
-
-
-		/*if (m_Interval > 0) {
-			if (m_Interval % 4 == 0)m_AttackRect += 1.0f;
-			m_Interval--;
-			if (m_Interval==4)
-			{
-				mp_Bullet.push_back(new c_PBullet(m_Pos, m_LR));
-			}
-			if (m_Interval < 0)
-			{
-				m_Interval = 0;
-				m_AttackRect = 0;
-			}
-		}*/
-
 		c_Game* game = dynamic_cast<c_Game*>(SCENE.GetNowScene());
-		if (game != nullptr) {
-			if (game->GetNowSceneType() == GameSceneType::Start) {
-				// スタート用の動き
-				//m_Pos.x += 1;
+		if (game != nullptr) 
+		{
+			if (game->GetNowSceneType() == GameSceneType::Start) 
+			{
 			}
 		}
 
@@ -133,6 +133,7 @@ void c_Player::Update()
 }
 void c_Player::Draw()
 {
+	if (m_Alive == 0) return;
 	Math::Rectangle rect;
 	Math::Color color;
 	
