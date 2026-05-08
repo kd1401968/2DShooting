@@ -16,7 +16,8 @@ void c_Player::Init()
 	m_AttackRect = 0.0f;
 	m_Interval = 0;
 	m_Count = 24;
-	m_Radius = { 35.0f,30.0 };
+	m_Radius = { 30.0f,25.0f };
+	m_Alpha = 1.0f;
 }
 void c_Player::Update()
 {
@@ -47,7 +48,7 @@ void c_Player::Update()
 
 		m_Speed.Normalize();
 
-		m_Speed *= 5.0f;
+		m_Speed *= 6.0f;
 
 		m_Pos += m_Speed;
 
@@ -98,6 +99,9 @@ void c_Player::Update()
 
 		}
 
+		if (m_Alpha < 1.0f) m_Alpha += 0.01f;
+		if (m_Alpha >= 1.0f) m_Alpha = 1.0f;
+
 		c_Game* game = dynamic_cast<c_Game*>(SCENE.GetNowScene());
 		if (game != nullptr) 
 		{
@@ -135,17 +139,17 @@ void c_Player::Draw()
 {
 	if (m_Alive == 0) return;
 	Math::Rectangle rect;
-	Math::Color color;
+	Math::Color color = { 1.0f,1.0f,1.0f,m_Alpha };
 	
 
 	SHADER.m_spriteShader.SetMatrix(m_Mat);
 	if (m_Interval == 0) {
 		rect = { (int)m_Rect * 79,0,79,69 };
-		SHADER.m_spriteShader.DrawTex(&m_Tex, rect, 1.0f);
+		SHADER.m_spriteShader.DrawTex(&m_Tex, rect, color);
 	}
 	else {
 		rect = { (int)m_AttackRect * 79,0,79,69 };
-		SHADER.m_spriteShader.DrawTex(&m_AttackTex, rect, 1.0f);
+		SHADER.m_spriteShader.DrawTex(&m_AttackTex, rect, color);
 	}
 
 	for (int i = 0; i < mp_Bullet.size(); i++) {
@@ -156,6 +160,20 @@ void c_Player::Draw()
 void c_Player::SetBulletFlg(bool flg,int i)
 {
 	 mp_Bullet[i]->SetFlg(flg);
+}
+
+void c_Player::SetLife()
+{
+	if (m_Alpha >= 1.0f)
+	{
+		m_Alpha = 0.0f;
+		m_Life--;
+		if (m_Life <= 0)
+		{
+			m_Alive = false;
+		}
+	}
+
 }
 
 void c_Player::Release()

@@ -2,8 +2,10 @@
 #include "Application/Game/Player/Player.h"
 #include "Application/Game/GameUI/GameUI.h"
 #include "Application/Game/GameObject/Enemy/Ghost/Ghost.h"
+#include "Application/Game/GameObject/Enemy/BigGhost/BigGhost.h"
 #include "Application/Game/GameObject/Bullet/PBullet/PBullet.h"
 #include "Application/Game/GameObject/Explosion/Explosion.h"
+#include "Application/Game/GameObject/Enemy/Eye/Eye.h"
 void c_Stage1::Init()
 {
 	m_BackTex.Load("Texture/NightForest/Image without mist.png");
@@ -15,6 +17,11 @@ void c_Stage1::Init()
 
 	m_BackPos = { 0.0f,0.0f };
 	m_BackMoveX = 3;
+
+	mp_BigGhost.push_back(new c_BigGhost({ -1100.0f ,0.0f }));
+
+
+	m_Cnt = 0;
 }
 
 void c_Stage1::Release()
@@ -26,6 +33,16 @@ void c_Stage1::Release()
 	}
 	mp_Ghost.clear();
 
+	for (int i = 0; i < mp_BigGhost.size(); i++) {
+		delete mp_BigGhost[i];
+	}
+	mp_Ghost.clear();
+
+	for (int i = 0; i < mp_Eye.size(); i++) {
+		delete mp_Eye[i];
+	}
+	mp_Eye.clear();
+
 	delete m_Player;
 	delete m_GameUI;
 }
@@ -35,54 +52,48 @@ void c_Stage1::Update()
 	m_Player->Update();
 	m_GameUI->Update(m_Player->GetLife());
 
-	if (rand() % 10 == 0) {
-		Math::Vector2 GhostPos = { 640.0f+64.0f,(float)((rand() % 537)-238)};
-		mp_Ghost.push_back(new c_Ghost(GhostPos));
+	if (m_Cnt >= 10)
+	{
+		mp_BigGhost[0]->EndFlg();
+	}
+	else
+	{
+		if (rand() % 30 == 0) 
+		{
+			Math::Vector2 GhostPos = { 640.0f + 64.0f,(float)((rand() % 537) - 238) };
+			mp_Ghost.push_back(new c_Ghost(GhostPos));
+		}
+		if (rand() % 35 == 0)
+		{
+			mp_Eye.push_back(new c_Eye(640.0f + 64.0f, (float)((rand() % 537) - 238), (rand()%101+80)/1000.0f));
+		}
 	}
 
-	for (int i = 0; i < m_Player->mp_Bullet.size(); i++)
-	{
-		bool Hit=true;
-		for (int j = 0; j < mp_Ghost.size(); j++)
-		{
-			Math::Vector2 BulletPos = m_Player->mp_Bullet[i]->GetPos();
-			Math::Vector2 GhostPos = mp_Ghost[j]->GetPos();
-
-			Hit=m_Hit.BulletHit(BulletPos, GhostPos, m_Player->mp_Bullet[i]->GetRadius(), mp_Ghost[j]->GetRadius());
-
-			if (!Hit)
-			{
-				m_Player->SetBulletFlg(Hit, i);
-				mp_Ghost[j]->SetFlg(Hit);
-				mp_Explosion.push_back(new c_Explosion());
-				mp_Explosion.back()->Init(GhostPos);
-				break;
-			}
-		}
-		if (!Hit)continue;
+	HitDec();
+	
+	for (int i = 0; i < mp_BigGhost.size(); i++) {
+		mp_BigGhost[i]->Update();
 	}
 
-	for (int i = 0; i < mp_Ghost.size(); i++)
+	for (auto it = mp_BigGhost.begin(); it != mp_BigGhost.end(); )
 	{
-		bool Hit = true;
-		Math::Vector2 PlayerPos = m_Player->GetPos();
-		Math::Vector2 GhostPos = mp_Ghost[i]->GetPos();
-
-		Hit = m_Hit.BulletHit(PlayerPos, GhostPos, m_Player->GetRadius(), mp_Ghost[i]->GetRadius());
-
-		if (!Hit)
+		if (!(*it)->GetFlg())
 		{
-			m_Player->SetLife();
-			mp_Ghost[i]->SetFlg(Hit);
-			mp_Explosion.push_back(new c_Explosion());
-			mp_Explosion.back()->Init(GhostPos);
-			break;
+			delete* it;
+			it = mp_BigGhost.erase(it);
 		}
-		if (!Hit)continue;
+		else
+		{
+			++it;
+		}
 	}
 
 	for (int i = 0; i < mp_Ghost.size(); i++) {
 		mp_Ghost[i]->Update();
+	}
+
+	for (int i = 0; i < mp_Eye.size(); i++) {
+		mp_Eye[i]->Update(m_Player->GetPos().x, m_Player->GetPos().y);
 	}
 
 	for (auto it = mp_Ghost.begin(); it != mp_Ghost.end(); )
@@ -115,6 +126,19 @@ void c_Stage1::Update()
 		}
 	}
 
+	for (auto it = mp_Eye.begin(); it != mp_Eye.end(); )
+	{
+		if (!(*it)->GetFlg())
+		{
+			delete* it;
+			it = mp_Eye.erase(it);
+		}
+		else
+		{
+			++it;
+		}
+	}
+
 	Math::Matrix S, R, T;
 	S = Math::Matrix::CreateScale(2.07, 2, 1);
 	T = Math::Matrix::CreateTranslation(m_BackPos.x, m_BackPos.y, 0);
@@ -139,6 +163,15 @@ void c_Stage1::Draw()
 		mp_Ghost[i]->Draw();
 	}
 
+	for (int i = 0; i < mp_BigGhost.size(); i++) {
+		mp_BigGhost[i]->Draw();
+	}
+
+	for (int i = 0; i < mp_Eye.size(); i++) {
+		mp_Eye[i]->Draw();
+	}
+
+
 	for (int i = 0; i < mp_Explosion.size(); i++) {
 		mp_Explosion[i]->Draw();
 	}
@@ -146,4 +179,108 @@ void c_Stage1::Draw()
 	m_GameUI->Draw();
 
 	m_Player->Draw();
+}
+
+void c_Stage1::HitDec()
+{
+	if (!m_Player->GetAlive()) return;
+
+	//プレイヤーとゴーストの当たり判定
+	for (int i = 0; i < mp_Ghost.size(); i++)
+	{
+		bool Hit = true;
+		Math::Vector2 PlayerPos = m_Player->GetPos();
+		Math::Vector2 GhostPos = mp_Ghost[i]->GetPos();
+
+		Hit = m_Hit.BulletHit(PlayerPos, GhostPos, m_Player->GetRadius(), mp_Ghost[i]->GetRadius());
+
+		if (!Hit)
+		{
+			if (m_Player->GetAlpha() >= 1.0f) {
+				m_Player->SetLife();
+			}
+			mp_Ghost[i]->SetFlg(Hit);
+			mp_Explosion.push_back(new c_Explosion());
+			mp_Explosion.back()->Init(GhostPos);
+			break;
+		}
+		if (!Hit)continue;
+	}
+
+	//プレイヤーの弾とゴーストの当たり判定
+	for (int i = 0; i < m_Player->mp_Bullet.size(); i++)
+	{
+		bool Hit = true;
+		for (int j = 0; j < mp_Ghost.size(); j++)
+		{
+			Math::Vector2 BulletPos = m_Player->mp_Bullet[i]->GetPos();
+			Math::Vector2 GhostPos = mp_Ghost[j]->GetPos();
+
+			Hit = m_Hit.BulletHit(BulletPos, GhostPos, m_Player->mp_Bullet[i]->GetRadius(), mp_Ghost[j]->GetRadius());
+
+			if (!Hit)
+			{
+				m_Player->SetBulletFlg(Hit, i);
+				mp_Ghost[j]->SetFlg(Hit);
+				mp_Explosion.push_back(new c_Explosion());
+				mp_Explosion.back()->Init(GhostPos);
+				m_Cnt += 1;
+				break;
+			}
+		}
+		if (!Hit)continue;
+	}
+
+	//ビッグゴーストとゴーストの当たり判定
+	for (int i = 0; i < mp_Ghost.size(); i++)
+	{
+		Math::Vector2 BigGhostPos = mp_BigGhost[0]->GetPos();
+		Math::Vector2 GhostPos = mp_Ghost[i]->GetPos();
+		if (BigGhostPos.x > GhostPos.x)
+		{
+			mp_BigGhost[0]->GoGhost();
+			bool Alive = false;
+			mp_Ghost[i]->SetFlg(Alive);
+		}
+	}
+
+
+	//プレイヤーとビッグゴーストの当たり判定
+	{
+		bool Hit=true;
+		Math::Vector2 BigGhostPos = mp_BigGhost[0]->GetPos();
+		Math::Vector2 PlayerPos = m_Player->GetPos();
+		Hit=m_Hit.BulletHit(BigGhostPos, PlayerPos, mp_BigGhost[0]->GetRadius(), m_Player->GetRadius());
+		if (!Hit&&m_Player->GetAlpha()>=1.0f)
+		{
+			m_Player->SetLife();
+			mp_Explosion.push_back(new c_Explosion());
+			mp_Explosion.back()->Init(PlayerPos);
+		}
+
+		if (PlayerPos.x  <= BigGhostPos.x)
+		{
+			m_Player->SetPos({ BigGhostPos.x , PlayerPos.y });
+		}
+	}
+
+	//プレイヤーの弾とビッグゴーストの当たり判定
+	for (int i = 0; i < m_Player->mp_Bullet.size(); i++)
+	{
+		bool Hit = true;
+		Math::Vector2 BulletPos = m_Player->mp_Bullet[i]->GetPos();
+		Math::Vector2 GhostPos = mp_BigGhost[0]->GetPos();
+
+		Hit = m_Hit.BulletHit(BulletPos, GhostPos, m_Player->mp_Bullet[i]->GetRadius(), mp_BigGhost[0]->GetRadius());
+
+		if (!Hit)
+		{
+			m_Player->SetBulletFlg(Hit, i);
+			mp_BigGhost[0]->BackGhost();
+			mp_Explosion.push_back(new c_Explosion());
+			mp_Explosion.back()->Init(BulletPos);
+			break;
+		}
+	}
+
 }

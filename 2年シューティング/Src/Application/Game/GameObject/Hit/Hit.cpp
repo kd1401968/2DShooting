@@ -2,14 +2,15 @@
 
 bool Hit::BulletHit(Math::Vector2 Apos, Math::Vector2 Bpos, Math::Vector2 Aradius, Math::Vector2 Bradius)
 {
-	float x, y;
 
-	x = Apos.x - Bpos.x;
-	y = Apos.y - Bpos.y;
+	float dx = fabs(Apos.x - Bpos.x);
+	float dy = fabs(Apos.y - Bpos.y);
 
-	float dis = sqrtf(x * x + y * y);
+	float rx = Aradius.x + Bradius.x;
+	float ry = Aradius.y + Bradius.y;
 
-	if (Aradius.x + Bradius.x >= dis)
+
+	if (dx <= rx && dy <= ry)
 	{
 		return false;
 	}

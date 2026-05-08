@@ -13,7 +13,8 @@ public:
 	Math::Vector2 GetPos() { return m_Pos; }
 	Math::Vector2 GetRadius() { return { 30.0f,25.0f }; }
 	bool GetFlg() { return m_Flg; }
-	void SetFlg(bool &Flg) { m_Flg = Flg; }
+	//void AbsSetFlg(bool Flg);
+	void SetFlg(bool& Flg) {m_Flg = Flg;};
 
 
 private:
@@ -28,6 +29,7 @@ private:
 	bool m_Flg;
 	float m_RectX;
 	int m_LR;
+	float m_Alpha;
 	Math::Vector2 m_Radius;
 	Math::Vector2 m_Scale;
 };

@@ -20,8 +20,10 @@ public:
 	bool GetAlive() { return m_Alive; }
 	void SetBulletFlg(bool flg,int i);
 	Math::Vector2 GetPos() { return m_Pos; }
+	void SetPos(Math::Vector2 Pos) { m_Pos = Pos; }
 	Math::Vector2 GetRadius() { return m_Radius; }
-	void SetLife() { m_Life--; if (m_Life <= 0) { m_Alive = false; } }
+	void SetLife();
+	float GetAlpha() { return m_Alpha; }
 
 private:
 
@@ -40,5 +42,6 @@ private:
 	bool m_Alive;
 	int m_Interval;
 	int m_Count;
+	float m_Alpha;
 	Math::Vector2 m_Radius;
 };

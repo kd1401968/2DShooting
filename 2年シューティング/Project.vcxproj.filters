@@ -91,6 +91,18 @@
     <Filter Include="Src\Application\Game\GameObject\Explosion">
       <UniqueIdentifier>{4d9b8671-4152-4ec2-b5a0-d538d8ca41b3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\Game\GameObject\Enemy\BigGhost">
+      <UniqueIdentifier>{1e5f18cc-4879-4e7f-bab7-1c7dacb9da4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\Game\GameObject\Enemy\Eye">
+      <UniqueIdentifier>{5016d6a6-f14d-4306-981a-f69adb466b3a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\Game\GameObject\Bullet\EBullet">
+      <UniqueIdentifier>{b5f5406b-ef0b-4f0d-bf3f-cf42d92c8287}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\Game\GameObject\Bullet\EBullet\IceBullet">
+      <UniqueIdentifier>{beb7f584-4b9e-4df2-bda2-76a1a36ca4a0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -228,6 +240,15 @@
     <ClInclude Include="Src\Application\Game\GameObject\Explosion\Explosion.h">
       <Filter>Src\Application\Game\GameObject\Explosion</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\Game\GameObject\Enemy\BigGhost\BigGhost.h">
+      <Filter>Src\Application\Game\GameObject\Enemy\BigGhost</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Game\GameObject\Enemy\Eye\Eye.h">
+      <Filter>Src\Application\Game\GameObject\Enemy\Eye</Filter>
+    </ClInclude>
+    <ClInclude Include="IceBullet.h">
+      <Filter>Src\Application\Game\GameObject\Bullet\EBullet\IceBullet</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -325,6 +346,15 @@
     </ClCompile>
     <ClCompile Include="Src\Application\Game\GameObject\Explosion\Explosion.cpp">
       <Filter>Src\Application\Game\GameObject\Explosion</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Game\GameObject\Enemy\BigGhost\BigGhost.cpp">
+      <Filter>Src\Application\Game\GameObject\Enemy\BigGhost</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Game\GameObject\Enemy\Eye\Eye.cpp">
+      <Filter>Src\Application\Game\GameObject\Enemy\Eye</Filter>
+    </ClCompile>
+    <ClCompile Include="IceBullet.cpp">
+      <Filter>Src\Application\Game\GameObject\Bullet\EBullet\IceBullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -22,6 +22,8 @@ void Scene::Update()
 
 void Scene::Init()
 {
+	srand(time(0));
+
 	TransitionInit();
 
 	mp_NowScene = new c_Game();
