@@ -8,16 +8,17 @@ public:
 	c_GameSceneBase *m_NowScene;
 	std::vector<c_PBullet*> mp_Bullet;
 
-	c_Player() {}
+	c_Player(int Life, Math::Vector2 Pos) { Init(Life, Pos); }
 	~c_Player() { Release(); }
 
-	void Init();
+	
 	void Update();
 	void Draw();
 
 	int GetLife() { return m_Life; }
 	int GetLR() { return m_LR; }
 	bool GetAlive() { return m_Alive; }
+	bool GetStartFlg() { return m_StartFlg; }
 	void SetBulletFlg(bool flg,int i);
 	Math::Vector2 GetPos() { return m_Pos; }
 	void SetPos(Math::Vector2 Pos) { m_Pos = Pos; }
@@ -27,6 +28,7 @@ public:
 
 private:
 
+	void Init(int Life,Math::Vector2 Pos);
 	void Release();
 
 	Math::Vector2 m_Pos;
@@ -40,6 +42,8 @@ private:
 	float m_Rect;
 	float m_AttackRect;
 	bool m_Alive;
+	bool m_InvFlg;
+	bool m_StartFlg;
 	int m_Interval;
 	int m_Count;
 	float m_Alpha;

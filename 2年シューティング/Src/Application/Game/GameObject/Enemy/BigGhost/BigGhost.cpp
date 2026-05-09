@@ -72,7 +72,7 @@ void c_BigGhost::Draw()
 
 void c_BigGhost::GoGhost()
 {
-	m_Pos.x -= m_Speed;
+	m_Pos.x -= m_Speed*1.5f;
 }
 
 void c_BigGhost::BackGhost()

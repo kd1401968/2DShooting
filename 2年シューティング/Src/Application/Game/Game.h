@@ -26,7 +26,7 @@ public:
 	void Update() override;
 	void Draw() override;
 
-	void ChangeScene(c_GameSceneBase* next);
+	void ChangeGameScene(c_GameSceneBase* next);
 
 	GameSceneType GetNowSceneType() const {
 		if (mp_NowGameScene == nullptr) return GameSceneType::Start; // 初期値など
@@ -34,5 +34,21 @@ public:
 	}
 
 
+
 private:
+
+	//---------------------
+	// 画面切り替え処理
+	//---------------------
+	void TransitionInit();		//画面切り替え初期化処理
+	void TransitionUpdate();	//画面切り替え更新処理
+	void TransitionDraw();		//画面切り替え描画処理
+
+	bool m_isTransition;				//画面切り替え中かどうか
+	int m_TransitionFlg;				//画面切り替えのフラグ
+
+	float m_ScreenAlpha;
+	float m_ScrennAdd;
+
+	int m_PlayerLife;
 };

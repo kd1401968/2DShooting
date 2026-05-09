@@ -3,16 +3,16 @@ class c_GameUI
 {
 public:
 
-	c_GameUI() {}
+	c_GameUI(int Life) { Init(Life); }
 	~c_GameUI() { Release(); }
 
-	void Init();
+	
 	void Update(int i);
 	void Draw();
 
 private:
 
-	
+	void Init(int Life);
 	void Release();
 
 	static const int LIFE_MAX = 3;

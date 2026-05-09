@@ -15,6 +15,20 @@ public:
 private:
 
 	KdTexture m_BackTex;
+	KdTexture m_TitleTex;
+	KdTexture m_PressTex;
 
 	Math::Matrix m_BackMat;
+	Math::Matrix m_TitleMat;
+	Math::Matrix m_PressMat;
+
+	Math::Vector2 m_TitlePos;
+	Math::Vector2 m_PressPos;
+
+	float m_TitleScale;
+	float m_PressScale;
+
+	float m_Alpha;
+
+	float m_BackRectX;
 };

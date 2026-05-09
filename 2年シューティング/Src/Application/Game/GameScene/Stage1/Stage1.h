@@ -13,15 +13,16 @@ class c_Stage1 :public c_GameSceneBase
 {
 public:
 
-	c_Stage1() = default;
+	c_Stage1(int PlayerLife) { Init(PlayerLife); }
 	~c_Stage1() = default;
 
-	void Init() override;
+	void Init(int PlayerLife);
 	void Release() override;
 	void Update() override;
 	void Draw() override;
 
 	void HitDec();
+
 
 	GameSceneType GetSceneType() const override {
 		return GameSceneType::Stage1;
@@ -43,6 +44,9 @@ private:
 	Math::Matrix m_BackMat;
 
 	Math::Vector2 m_BackPos;
+	Math::Vector2 m_StartPos;
 	float m_BackMoveX;
 	int m_Cnt;
+
+	bool m_StartFlg;
 };

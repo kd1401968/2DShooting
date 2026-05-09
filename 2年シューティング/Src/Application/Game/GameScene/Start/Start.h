@@ -6,10 +6,10 @@ class c_Start :public c_GameSceneBase
 {
 public:
 
-	c_Start() = default;
+	c_Start(int PlayerLife) { Init(PlayerLife); }
 	~c_Start() = default;
 
-	void Init() override;
+	void Init(int PlayerLife);
 	void Release() override;
 	void Update() override;
 	void Draw() override;
@@ -29,4 +29,7 @@ private:
 
 	Math::Vector2 m_BackPos;
 	float m_BackMoveX;
+
+	int m_PlayerLife;
+	Math::Vector2 m_StartPos;
 };

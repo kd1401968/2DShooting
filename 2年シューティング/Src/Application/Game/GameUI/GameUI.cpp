@@ -1,11 +1,18 @@
 #include "Application/Game/GameUI/GameUI.h"
-void c_GameUI::Init() 
+void c_GameUI::Init(int Life) 
 {
 	m_LifeTex.Load("Texture/Life.png");
-	for(int i=0;i<LIFE_MAX;i++)
+	for (int i = 0; i < LIFE_MAX; i++)
 	{
 		m_LifeMat[i] = Math::Matrix::Identity;
-		m_LifeFlg[i] = true;
+		if (i > Life)
+		{
+			m_LifeFlg[i] = false;
+		}
+		else
+		{
+			m_LifeFlg[i] = true;
+		}
 		m_LifePos[i] = { -580.0f + i * 80.0f, -320.0f };
 	}
 	m_LifeScale = 0.25f;

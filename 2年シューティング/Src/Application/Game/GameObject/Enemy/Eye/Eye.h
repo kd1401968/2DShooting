@@ -1,5 +1,6 @@
 #pragma once
 #include "Application/Game/GameObject/GameObjectBase.h"
+class c_IceBullet;
 class c_Eye : public c_GameObjectBase {
 public:
 
@@ -10,6 +11,8 @@ public:
 	void Draw() override;
 
 	bool GetFlg() { return m_Flg; }
+
+	c_IceBullet* m_IceBullet = nullptr;
 
 private:
 

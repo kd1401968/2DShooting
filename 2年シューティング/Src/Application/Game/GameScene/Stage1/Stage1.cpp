@@ -6,14 +6,15 @@
 #include "Application/Game/GameObject/Bullet/PBullet/PBullet.h"
 #include "Application/Game/GameObject/Explosion/Explosion.h"
 #include "Application/Game/GameObject/Enemy/Eye/Eye.h"
-void c_Stage1::Init()
+#include "Application/Game/GameObject/Bullet/EBullet/IceBullet/IceBullet.h"
+void c_Stage1::Init(int PlayerLife)
 {
-	m_BackTex.Load("Texture/NightForest/Image without mist.png");
-	m_Player = new c_Player;
-	m_Player->Init();
+	m_StartPos = { -800.0f,0.0f };
 
-	m_GameUI = new c_GameUI;
-	m_GameUI->Init();
+	m_BackTex.Load("Texture/NightForest/Image without mist.png");
+	m_Player = new c_Player(PlayerLife,m_StartPos);
+	
+	m_GameUI = new c_GameUI(PlayerLife);
 
 	m_BackPos = { 0.0f,0.0f };
 	m_BackMoveX = 3;
@@ -52,90 +53,93 @@ void c_Stage1::Update()
 	m_Player->Update();
 	m_GameUI->Update(m_Player->GetLife());
 
-	if (m_Cnt >= 10)
-	{
-		mp_BigGhost[0]->EndFlg();
-	}
-	else
-	{
-		if (rand() % 30 == 0) 
-		{
-			Math::Vector2 GhostPos = { 640.0f + 64.0f,(float)((rand() % 537) - 238) };
-			mp_Ghost.push_back(new c_Ghost(GhostPos));
-		}
-		if (rand() % 35 == 0)
-		{
-			mp_Eye.push_back(new c_Eye(640.0f + 64.0f, (float)((rand() % 537) - 238), (rand()%101+80)/1000.0f));
-		}
-	}
+	if (m_Player->GetStartFlg()) {
 
-	HitDec();
-	
-	for (int i = 0; i < mp_BigGhost.size(); i++) {
-		mp_BigGhost[i]->Update();
-	}
-
-	for (auto it = mp_BigGhost.begin(); it != mp_BigGhost.end(); )
-	{
-		if (!(*it)->GetFlg())
+		if (m_Cnt >= 10)
 		{
-			delete* it;
-			it = mp_BigGhost.erase(it);
+			mp_BigGhost[0]->EndFlg();
 		}
 		else
 		{
-			++it;
+			if (rand() % 40 == 0)
+			{
+				Math::Vector2 GhostPos = { 640.0f + 64.0f,(float)((rand() % 537) - 238) };
+				mp_Ghost.push_back(new c_Ghost(GhostPos));
+			}
+			if (rand() % 45 == 0)
+			{
+				mp_Eye.push_back(new c_Eye(640.0f + 64.0f, (float)((rand() % 537) - 238), (rand() % 101 + 80) / 1000.0f));
+			}
 		}
-	}
 
-	for (int i = 0; i < mp_Ghost.size(); i++) {
-		mp_Ghost[i]->Update();
-	}
+		HitDec();
 
-	for (int i = 0; i < mp_Eye.size(); i++) {
-		mp_Eye[i]->Update(m_Player->GetPos().x, m_Player->GetPos().y);
-	}
+		for (int i = 0; i < mp_BigGhost.size(); i++) {
+			mp_BigGhost[i]->Update();
+		}
 
-	for (auto it = mp_Ghost.begin(); it != mp_Ghost.end(); )
-	{
-		if (!(*it)->GetFlg())
+		for (auto it = mp_BigGhost.begin(); it != mp_BigGhost.end(); )
 		{
-			delete* it;
-			it = mp_Ghost.erase(it);
+			if (!(*it)->GetFlg())
+			{
+				delete* it;
+				it = mp_BigGhost.erase(it);
+			}
+			else
+			{
+				++it;
+			}
 		}
-		else
-		{
-			++it;
-		}
-	}
-	
-	for (int i = 0; i < mp_Explosion.size(); i++) {
-		mp_Explosion[i]->Update();
-	}
 
-	for (auto it = mp_Explosion.begin(); it != mp_Explosion.end(); )
-	{
-		if (!(*it)->GetFlg())
-		{
-			delete* it;
-			it = mp_Explosion.erase(it);
+		for (int i = 0; i < mp_Ghost.size(); i++) {
+			mp_Ghost[i]->Update();
 		}
-		else
-		{
-			++it;
-		}
-	}
 
-	for (auto it = mp_Eye.begin(); it != mp_Eye.end(); )
-	{
-		if (!(*it)->GetFlg())
-		{
-			delete* it;
-			it = mp_Eye.erase(it);
+		for (int i = 0; i < mp_Eye.size(); i++) {
+			mp_Eye[i]->Update(m_Player->GetPos().x, m_Player->GetPos().y);
 		}
-		else
+
+		for (auto it = mp_Ghost.begin(); it != mp_Ghost.end(); )
 		{
-			++it;
+			if (!(*it)->GetFlg())
+			{
+				delete* it;
+				it = mp_Ghost.erase(it);
+			}
+			else
+			{
+				++it;
+			}
+		}
+
+		for (int i = 0; i < mp_Explosion.size(); i++) {
+			mp_Explosion[i]->Update();
+		}
+
+		for (auto it = mp_Explosion.begin(); it != mp_Explosion.end(); )
+		{
+			if (!(*it)->GetFlg())
+			{
+				delete* it;
+				it = mp_Explosion.erase(it);
+			}
+			else
+			{
+				++it;
+			}
+		}
+
+		for (auto it = mp_Eye.begin(); it != mp_Eye.end(); )
+		{
+			if (!(*it)->GetFlg())
+			{
+				delete* it;
+				it = mp_Eye.erase(it);
+			}
+			else
+			{
+				++it;
+			}
 		}
 	}
 
@@ -159,21 +163,26 @@ void c_Stage1::Draw()
 	SHADER.m_spriteShader.SetMatrix(m_BackMat);
 	SHADER.m_spriteShader.DrawTex(&m_BackTex, 0, 0, &Rect, &color);
 
-	for (int i = 0; i < mp_Ghost.size(); i++) {
-		mp_Ghost[i]->Draw();
-	}
+	if (m_Player->GetStartFlg())
+	{
 
-	for (int i = 0; i < mp_BigGhost.size(); i++) {
-		mp_BigGhost[i]->Draw();
-	}
-
-	for (int i = 0; i < mp_Eye.size(); i++) {
-		mp_Eye[i]->Draw();
-	}
+		for (int i = 0; i < mp_Ghost.size(); i++) {
+			mp_Ghost[i]->Draw();
+		}
 
 
-	for (int i = 0; i < mp_Explosion.size(); i++) {
-		mp_Explosion[i]->Draw();
+		for (int i = 0; i < mp_Eye.size(); i++) {
+			mp_Eye[i]->Draw();
+		}
+
+		for (int i = 0; i < mp_BigGhost.size(); i++) {
+			mp_BigGhost[i]->Draw();
+		}
+
+
+		for (int i = 0; i < mp_Explosion.size(); i++) {
+			mp_Explosion[i]->Draw();
+		}
 	}
 
 	m_GameUI->Draw();
@@ -247,18 +256,18 @@ void c_Stage1::HitDec()
 
 	//プレイヤーとビッグゴーストの当たり判定
 	{
-		bool Hit=true;
+		bool Hit = true;
 		Math::Vector2 BigGhostPos = mp_BigGhost[0]->GetPos();
 		Math::Vector2 PlayerPos = m_Player->GetPos();
-		Hit=m_Hit.BulletHit(BigGhostPos, PlayerPos, mp_BigGhost[0]->GetRadius(), m_Player->GetRadius());
-		if (!Hit&&m_Player->GetAlpha()>=1.0f)
+		Hit = m_Hit.BulletHit(BigGhostPos, PlayerPos, mp_BigGhost[0]->GetRadius(), m_Player->GetRadius());
+		if (!Hit && m_Player->GetAlpha() >= 1.0f)
 		{
 			m_Player->SetLife();
 			mp_Explosion.push_back(new c_Explosion());
 			mp_Explosion.back()->Init(PlayerPos);
 		}
 
-		if (PlayerPos.x  <= BigGhostPos.x)
+		if (PlayerPos.x <= BigGhostPos.x)
 		{
 			m_Player->SetPos({ BigGhostPos.x , PlayerPos.y });
 		}
@@ -283,4 +292,20 @@ void c_Stage1::HitDec()
 		}
 	}
 
+	for(int i=0;i<mp_Eye.size();i++)
+	{
+		if (!mp_Eye[i]->m_IceBullet)continue;
+		bool Hit = true;
+		Math::Vector2 EyePos = mp_Eye[i]->m_IceBullet->GetPos();
+		Math::Vector2 PlayerPos = m_Player->GetPos();
+		Hit = m_Hit.BulletHit(EyePos, PlayerPos, mp_Eye[i]->m_IceBullet->GetRadius(), m_Player->GetRadius());
+		if (!Hit && m_Player->GetAlpha() >= 1.0f)
+		{
+			m_Player->SetLife();
+			mp_Explosion.push_back(new c_Explosion());
+			mp_Explosion.back()->Init(PlayerPos);
+			mp_Eye[i]->m_IceBullet->SetFlg(Hit);
+			break;
+		}
+	}
 }

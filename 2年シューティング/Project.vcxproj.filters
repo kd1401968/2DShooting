@@ -246,7 +246,7 @@
     <ClInclude Include="Src\Application\Game\GameObject\Enemy\Eye\Eye.h">
       <Filter>Src\Application\Game\GameObject\Enemy\Eye</Filter>
     </ClInclude>
-    <ClInclude Include="IceBullet.h">
+    <ClInclude Include="Src\Application\Game\GameObject\Bullet\EBullet\IceBullet\IceBullet.h">
       <Filter>Src\Application\Game\GameObject\Bullet\EBullet\IceBullet</Filter>
     </ClInclude>
   </ItemGroup>
@@ -353,7 +353,7 @@
     <ClCompile Include="Src\Application\Game\GameObject\Enemy\Eye\Eye.cpp">
       <Filter>Src\Application\Game\GameObject\Enemy\Eye</Filter>
     </ClCompile>
-    <ClCompile Include="IceBullet.cpp">
+    <ClCompile Include="Src\Application\Game\GameObject\Bullet\EBullet\IceBullet\IceBullet.cpp">
       <Filter>Src\Application\Game\GameObject\Bullet\EBullet\IceBullet</Filter>
     </ClCompile>
   </ItemGroup>

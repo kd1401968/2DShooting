@@ -3,14 +3,14 @@
 #include "Application/Game/Game.h"
 #include "Application/Scene.h"
 #include "Application/Game/GameObject/Bullet/PBullet/PBullet.h"
-void c_Player::Init()
+void c_Player::Init(int Life, Math::Vector2 Pos)
 {
 	m_Tex.Load("Texture/FLYING.png");
 	m_AttackTex.Load("Texture/ATTACK.png");
 	m_Alive = true;
-	m_Life = 3;
-	m_Pos = { 0.0f,30.0f };
-	m_Speed = { 0.0f,0.0f };
+	m_Life = Life;
+	m_Pos = Pos;
+	m_Speed = { 6.0f,0.0f };
 	m_LR = -1;
 	m_Rect = 0.0f;
 	m_AttackRect = 0.0f;
@@ -18,9 +18,47 @@ void c_Player::Init()
 	m_Count = 24;
 	m_Radius = { 30.0f,25.0f };
 	m_Alpha = 1.0f;
+	m_InvFlg = false;
+	m_StartFlg = false;
 }
 void c_Player::Update()
 {
+	c_Game* game = dynamic_cast<c_Game*>(SCENE.GetNowScene());
+	if (game != nullptr)
+	{
+		if (game->GetNowSceneType() == GameSceneType::Start)
+		{
+			m_StartFlg = true;
+		}
+
+		if (game->GetNowSceneType() == GameSceneType::Stage1)
+		{
+			if (m_Pos.x <= 0)
+			{
+				m_Pos.x += m_Speed.x;
+			}
+			else
+			{
+				m_StartFlg = true;
+			}
+		}
+	}
+
+	if (m_Alive)
+	{
+		m_Rect += 0.13;
+		if (m_Rect >= 4.0f) {
+			m_Rect = 0.0f;
+		}
+	}
+
+	Math::Matrix S, R, T;
+	S = Math::Matrix::CreateScale(1 * m_LR, 1, 1);
+	T = Math::Matrix::CreateTranslation(m_Pos.x, m_Pos.y, 0);
+	m_Mat = S * T;
+
+	if (!m_StartFlg) return;
+
 	if (m_Alive == 1) {
 		//Ž©‹@‚ÌˆÚ“®
 		if (GetAsyncKeyState(VK_RIGHT) & 0x8000 || GetAsyncKeyState('D') & 0x8000) {
@@ -52,17 +90,29 @@ void c_Player::Update()
 
 		m_Pos += m_Speed;
 
-
+		if (GetAsyncKeyState('G') & 0x8000)
+		{
+			m_InvFlg = true;
+		}
+		if(GetAsyncKeyState('H') & 0x8000)
+		{
+			m_InvFlg = false;
+			m_Alpha = 1.0f;
+		}
+		if (m_InvFlg)
+		{
+			m_Alpha = 0.7f;
+		}
+		else
+		{
+			if (m_Alpha < 1.0f) m_Alpha += 0.01f;
+			if (m_Alpha >= 1.0f) m_Alpha = 1.0f;
+		}
 
 		if (m_Pos.x > (640 - m_Radius.x))	m_Pos.x = (640 - m_Radius.x);
 		if (m_Pos.x < (-640 + m_Radius.x))	m_Pos.x = (-640 + m_Radius.x);
 		if (m_Pos.y > (360 - m_Radius.y))	m_Pos.y = (360 - m_Radius.y);
 		if (m_Pos.y < ( - 280 + m_Radius.y))m_Pos.y = (-280 + m_Radius.y);
-
-		m_Rect += 0.13;
-		if (m_Rect >= 4.0f) {
-			m_Rect == 0.0f;
-		}
 
 		if (m_Interval == 0) {
 			if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
@@ -99,17 +149,6 @@ void c_Player::Update()
 
 		}
 
-		if (m_Alpha < 1.0f) m_Alpha += 0.01f;
-		if (m_Alpha >= 1.0f) m_Alpha = 1.0f;
-
-		c_Game* game = dynamic_cast<c_Game*>(SCENE.GetNowScene());
-		if (game != nullptr) 
-		{
-			if (game->GetNowSceneType() == GameSceneType::Start) 
-			{
-			}
-		}
-
 
 	}
 
@@ -130,10 +169,7 @@ void c_Player::Update()
 		}
 	}
 
-	Math::Matrix S, R, T;
-	S = Math::Matrix::CreateScale(1*m_LR, 1, 1);
-	T = Math::Matrix::CreateTranslation(m_Pos.x, m_Pos.y, 0);
-	m_Mat = S * T;
+	
 }
 void c_Player::Draw()
 {
@@ -164,6 +200,8 @@ void c_Player::SetBulletFlg(bool flg,int i)
 
 void c_Player::SetLife()
 {
+	if (m_InvFlg) return;
+
 	if (m_Alpha >= 1.0f)
 	{
 		m_Alpha = 0.0f;

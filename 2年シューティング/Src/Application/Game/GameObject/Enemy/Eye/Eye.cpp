@@ -1,5 +1,5 @@
 #include "Eye.h"
-
+#include "Application/Game/GameObject/Bullet/EBullet/IceBullet/IceBullet.h"
 void c_Eye::Init(float x, float y, float scale)
 {
 	Eye1Tex.Load("Texture/Eye/Eye1.png");
@@ -30,6 +30,9 @@ void c_Eye::Update(float tX, float tY)
 	if (distance <= 600) {
 		m_Alpha += 0.05;
 		if (m_Alpha >= 1)m_Alpha = 1;
+		if (distance <= 400)
+			m_Alpha -= 0.08;
+		if (m_Alpha <= 0)m_Alpha = 0;
 	}
 	else {
 		m_Alpha -= 0.05;
@@ -59,12 +62,17 @@ void c_Eye::Update(float tX, float tY)
 	else {
 		m_Count++;
 		m_Alpha = 1.0f;
+		if (m_Count == 30)m_IceBullet = new c_IceBullet(m_Pos[0], { tX,tY }, m_Scale);
 		if (m_Count >= 60)
 		{
 			m_MoveFlg = true;
 		}
 	}
 
+	if (m_IceBullet)
+	{
+		m_IceBullet->Update();
+	}
 	
 
 	if (m_Pos[0].x <= -680)m_Flg = false;
@@ -135,6 +143,13 @@ void c_Eye::Draw()
 	rect = { 0,0,311,316 };
 	SHADER.m_spriteShader.SetMatrix(Eye2Mat);
 	SHADER.m_spriteShader.DrawTex(&Eye2Tex, 0, 0, &rect, &color);
+
+	if (m_IceBullet)
+	{
+		m_IceBullet->Draw();
+	}
+
+
 	//çïñ⁄
 	rect = { 0,0,185,179 };
 	SHADER.m_spriteShader.SetMatrix(Eye3Mat);
@@ -146,4 +161,6 @@ void c_Eye::Release()
 	Eye1Tex.Release();
 	Eye2Tex.Release();
 	Eye3Tex.Release();
+
+	delete m_IceBullet;
 }
