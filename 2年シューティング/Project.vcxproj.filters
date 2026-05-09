@@ -103,6 +103,9 @@
     <Filter Include="Src\Application\Game\GameObject\Bullet\EBullet\IceBullet">
       <UniqueIdentifier>{beb7f584-4b9e-4df2-bda2-76a1a36ca4a0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\Game\GameScene\Stage2">
+      <UniqueIdentifier>{3216fd24-1b43-450e-9a2e-1d7fc103af67}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -249,6 +252,9 @@
     <ClInclude Include="Src\Application\Game\GameObject\Bullet\EBullet\IceBullet\IceBullet.h">
       <Filter>Src\Application\Game\GameObject\Bullet\EBullet\IceBullet</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\Game\GameScene\Stage2\Stage2.h">
+      <Filter>Src\Application\Game\GameScene\Stage2</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -355,6 +361,9 @@
     </ClCompile>
     <ClCompile Include="Src\Application\Game\GameObject\Bullet\EBullet\IceBullet\IceBullet.cpp">
       <Filter>Src\Application\Game\GameObject\Bullet\EBullet\IceBullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Game\GameScene\Stage2\Stage2.cpp">
+      <Filter>Src\Application\Game\GameScene\Stage2</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

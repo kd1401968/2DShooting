@@ -25,6 +25,7 @@ public:
 	Math::Vector2 GetRadius() { return m_Radius; }
 	void SetLife();
 	float GetAlpha() { return m_Alpha; }
+	void SetNextFlg(bool flg) { m_NextFlg = flg; }
 
 private:
 
@@ -44,6 +45,7 @@ private:
 	bool m_Alive;
 	bool m_InvFlg;
 	bool m_StartFlg;
+	bool m_NextFlg;
 	int m_Interval;
 	int m_Count;
 	float m_Alpha;

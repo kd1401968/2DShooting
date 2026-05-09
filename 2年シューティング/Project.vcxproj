@@ -170,6 +170,7 @@
     <ClInclude Include="Src\Application\Game\GameObject\Hit\Hit.h" />
     <ClInclude Include="Src\Application\Game\GameScene\GameSceneBase.h" />
     <ClInclude Include="Src\Application\Game\GameScene\Stage1\Stage1.h" />
+    <ClInclude Include="Src\Application\Game\GameScene\Stage2\Stage2.h" />
     <ClInclude Include="Src\Application\Game\GameScene\Start\Start.h" />
     <ClInclude Include="Src\Application\Game\GameUI\GameUI.h" />
     <ClInclude Include="Src\Application\Game\Player\Player.h" />
@@ -210,6 +211,7 @@
     <ClCompile Include="Src\Application\Game\GameObject\Explosion\Explosion.cpp" />
     <ClCompile Include="Src\Application\Game\GameObject\Hit\Hit.cpp" />
     <ClCompile Include="Src\Application\Game\GameScene\Stage1\Stage1.cpp" />
+    <ClCompile Include="Src\Application\Game\GameScene\Stage2\Stage2.cpp" />
     <ClCompile Include="Src\Application\Game\GameScene\Start\Start.cpp" />
     <ClCompile Include="Src\Application\Game\GameUI\GameUI.cpp" />
     <ClCompile Include="Src\Application\Game\Player\Player.cpp" />

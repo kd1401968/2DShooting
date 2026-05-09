@@ -33,7 +33,8 @@ void c_Start::Update()
 	m_Player->Update();
 	m_GameUI->Update(m_Player->GetLife());
 
-	m_PlayerLife = 2;
+	//テスト用
+	//m_PlayerLife = 2;
 	if (GetAsyncKeyState('Z') & 0x8000)
 	{
 		c_Game* game = dynamic_cast<c_Game*>(SCENE.GetNowScene());

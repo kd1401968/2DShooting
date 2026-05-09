@@ -1,10 +1,11 @@
 #include "Game.h"
 #include "GameScene/Start/Start.h"
 #include "GameScene/Stage1/Stage1.h"
+#include "GameScene/Stage2/Stage2.h"
 void c_Game::Init()
 {
 	m_PlayerLife = 3;
-	mp_NowGameScene = new c_Start(m_PlayerLife);
+	mp_NowGameScene = new c_Stage2(m_PlayerLife);
 }
 
 void c_Game::Release()

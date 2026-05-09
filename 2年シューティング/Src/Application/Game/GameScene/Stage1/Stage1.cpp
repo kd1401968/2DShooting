@@ -7,6 +7,9 @@
 #include "Application/Game/GameObject/Explosion/Explosion.h"
 #include "Application/Game/GameObject/Enemy/Eye/Eye.h"
 #include "Application/Game/GameObject/Bullet/EBullet/IceBullet/IceBullet.h"
+#include "Application/Game/Game.h"
+#include "Application/Scene.h"
+#include "Application/Game/GameScene/Stage2/Stage2.h"
 void c_Stage1::Init(int PlayerLife)
 {
 	m_StartPos = { -800.0f,0.0f };
@@ -23,6 +26,7 @@ void c_Stage1::Init(int PlayerLife)
 
 
 	m_Cnt = 0;
+	m_Intarval = 0;
 }
 
 void c_Stage1::Release()
@@ -37,7 +41,7 @@ void c_Stage1::Release()
 	for (int i = 0; i < mp_BigGhost.size(); i++) {
 		delete mp_BigGhost[i];
 	}
-	mp_Ghost.clear();
+	mp_BigGhost.clear();
 
 	for (int i = 0; i < mp_Eye.size(); i++) {
 		delete mp_Eye[i];
@@ -58,6 +62,19 @@ void c_Stage1::Update()
 		if (m_Cnt >= 10)
 		{
 			mp_BigGhost[0]->EndFlg();
+
+			m_Intarval++;
+			if(m_Intarval >= 120)
+			{
+				m_Player->SetNextFlg(true);
+				if (m_Player->GetPos().x >= 700.0f)
+				{
+					c_Game* game = dynamic_cast<c_Game*>(SCENE.GetNowScene());
+					if (game) {
+						game->ChangeGameScene(new c_Stage2(m_Player->GetLife()));
+					}
+				}
+			}
 		}
 		else
 		{
@@ -189,6 +206,8 @@ void c_Stage1::Draw()
 
 	m_Player->Draw();
 }
+
+
 
 void c_Stage1::HitDec()
 {

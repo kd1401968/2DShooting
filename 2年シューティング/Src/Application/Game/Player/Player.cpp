@@ -20,6 +20,7 @@ void c_Player::Init(int Life, Math::Vector2 Pos)
 	m_Alpha = 1.0f;
 	m_InvFlg = false;
 	m_StartFlg = false;
+	m_NextFlg = false;
 }
 void c_Player::Update()
 {
@@ -33,7 +34,7 @@ void c_Player::Update()
 
 		if (game->GetNowSceneType() == GameSceneType::Stage1)
 		{
-			if (m_Pos.x <= 0)
+			if (m_Pos.x <= -200&&m_StartFlg==false)
 			{
 				m_Pos.x += m_Speed.x;
 			}
@@ -41,6 +42,28 @@ void c_Player::Update()
 			{
 				m_StartFlg = true;
 			}
+
+			if (m_StartFlg)
+			{
+				if (m_NextFlg)
+				{
+					m_Speed.x = 6.0f;
+					m_Pos.x += m_Speed.x;
+				}
+			}
+		}
+
+		if (game->GetNowSceneType() == GameSceneType::Stage2)
+		{
+			if (m_Pos.x <= 0 && m_StartFlg == false)
+			{
+				m_Pos.x += m_Speed.x;
+			}
+			else
+			{
+				m_StartFlg = true;
+			}
+
 		}
 	}
 
@@ -109,11 +132,16 @@ void c_Player::Update()
 			if (m_Alpha >= 1.0f) m_Alpha = 1.0f;
 		}
 
-		if (m_Pos.x > (640 - m_Radius.x))	m_Pos.x = (640 - m_Radius.x);
+		//画面外に出ないようにする
+		if (!m_NextFlg)
+		{
+			if (m_Pos.x > (640 - m_Radius.x))	m_Pos.x = (640 - m_Radius.x);
+		}
 		if (m_Pos.x < (-640 + m_Radius.x))	m_Pos.x = (-640 + m_Radius.x);
 		if (m_Pos.y > (360 - m_Radius.y))	m_Pos.y = (360 - m_Radius.y);
 		if (m_Pos.y < ( - 280 + m_Radius.y))m_Pos.y = (-280 + m_Radius.y);
 
+		//攻撃とインターバルの管理
 		if (m_Interval == 0) {
 			if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
 				m_Interval++;
