@@ -24,7 +24,7 @@ void c_Player::Init(int Life, Math::Vector2 Pos)
 }
 void c_Player::Update()
 {
-	c_Game* game = dynamic_cast<c_Game*>(SCENE.GetNowScene());
+	/*c_Game* game = dynamic_cast<c_Game*>(SCENE.GetNowScene());
 	if (game != nullptr)
 	{
 		if (game->GetNowSceneType() == GameSceneType::Start)
@@ -65,7 +65,47 @@ void c_Player::Update()
 			}
 
 		}
+	}*/
+	c_Game* game = dynamic_cast<c_Game*>(SCENE.GetNowScene());
+	if (game == nullptr) return;
+
+	GameSceneType type = game->GetNowSceneType();
+
+	switch (type)
+	{
+	case GameSceneType::Start:
+		m_StartFlg = true;
+		break;
+
+	case GameSceneType::Stage1:
+		if (m_Pos.x <= -200 && m_StartFlg == false)
+		{
+			m_Pos.x += m_Speed.x;
+		}
+		else
+		{
+			m_StartFlg = true;
+		}
+
+		if (m_StartFlg && m_NextFlg)
+		{
+			m_Speed.x = 6.0f;
+			m_Pos.x += m_Speed.x;
+		}
+		break;
+
+	case GameSceneType::Stage2:
+		if (m_Pos.x <= -400 && m_StartFlg == false)
+		{
+			m_Pos.x += m_Speed.x;
+		}
+		else
+		{
+			m_StartFlg = true;
+		}
+		break;
 	}
+
 
 	if (m_Alive)
 	{

@@ -50,7 +50,9 @@ void c_Ghost::Draw()
 	Math::Color color = { 1.0f,1.0f,1.0f,m_Alpha };
 	SHADER.m_spriteShader.SetMatrix(m_Mat);
 	SHADER.m_spriteShader.DrawTex(&m_Tex, rect, color);
-	//SHADER.m_spriteShader.DrawBox(0, 0, 119, 100, &color, true);
+
+	/*SHADER.m_spriteShader.SetMatrix(Math::Matrix::Identity);
+	SHADER.m_spriteShader.DrawBox(m_Pos.x, m_Pos.y, m_Radius.x, m_Radius.y, &color, true);*/
 }
 void c_Ghost::Release()
 {

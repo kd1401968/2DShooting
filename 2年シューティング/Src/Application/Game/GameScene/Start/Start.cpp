@@ -5,19 +5,21 @@
 #include "Application/Game/GameScene/Stage1/Stage1.h"
 #include "Application/Game/Game.h"
 #include "Application/Scene.h"
-void c_Start::Init(int PlayerLife)
+void c_Start::Init(int PlayerLife,int Score)
 {
 	m_StartPos = { 0.0f,0.0f };
 
 	m_BackTex.Load("Texture/NightForest/Image without mist.png");
 	m_Player = new c_Player(PlayerLife,m_StartPos);
 
-	m_GameUI = new c_GameUI(PlayerLife);
+	m_GameUI = new c_GameUI(PlayerLife,Score);
 
 	m_BackPos = { 0.0f,0.0f };
 	m_BackMoveX = 3;
 
 	m_PlayerLife = PlayerLife;
+	m_Score = Score;
+	
 }
 
 void c_Start::Release()
@@ -39,7 +41,7 @@ void c_Start::Update()
 	{
 		c_Game* game = dynamic_cast<c_Game*>(SCENE.GetNowScene());
 		if (game) {
-			game->ChangeGameScene(new c_Stage1(m_PlayerLife));
+			game->ChangeGameScene(new c_Stage1(m_PlayerLife,m_Score));
 		}
 
 	}

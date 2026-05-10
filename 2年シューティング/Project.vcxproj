@@ -159,10 +159,13 @@
     <ClInclude Include="..\Library\tinygltf\stb_image.h" />
     <ClInclude Include="..\Library\tinygltf\stb_image_write.h" />
     <ClInclude Include="..\Library\tinygltf\tiny_gltf.h" />
+    <ClInclude Include="Src\Application\Game\Effect\Rain\Rain.h" />
     <ClInclude Include="Src\Application\Game\Game.h" />
     <ClInclude Include="Src\Application\Game\GameObject\Bullet\EBullet\IceBullet\IceBullet.h" />
+    <ClInclude Include="Src\Application\Game\GameObject\Bullet\EBullet\Star\Star.h" />
     <ClInclude Include="Src\Application\Game\GameObject\Bullet\PBullet\PBullet.h" />
     <ClInclude Include="Src\Application\Game\GameObject\Enemy\BigGhost\BigGhost.h" />
+    <ClInclude Include="Src\Application\Game\GameObject\Enemy\Boss\Boss.h" />
     <ClInclude Include="Src\Application\Game\GameObject\Enemy\Eye\Eye.h" />
     <ClInclude Include="Src\Application\Game\GameObject\Enemy\Ghost\Ghost.h" />
     <ClInclude Include="Src\Application\Game\GameObject\Explosion\Explosion.h" />
@@ -202,10 +205,13 @@
     <ClCompile Include="..\Library\imgui\imgui_impl_dx11.cpp" />
     <ClCompile Include="..\Library\imgui\imgui_impl_win32.cpp" />
     <ClCompile Include="..\Library\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="Src\Application\Game\Effect\Rain\Rain.cpp" />
     <ClCompile Include="Src\Application\Game\Game.cpp" />
     <ClCompile Include="Src\Application\Game\GameObject\Bullet\EBullet\IceBullet\IceBullet.cpp" />
+    <ClCompile Include="Src\Application\Game\GameObject\Bullet\EBullet\Star\Star.cpp" />
     <ClCompile Include="Src\Application\Game\GameObject\Bullet\PBullet\PBullet.cpp" />
     <ClCompile Include="Src\Application\Game\GameObject\Enemy\BigGhost\BigGhost.cpp" />
+    <ClCompile Include="Src\Application\Game\GameObject\Enemy\Boss\Boss.cpp" />
     <ClCompile Include="Src\Application\Game\GameObject\Enemy\Eye\Eye.cpp" />
     <ClCompile Include="Src\Application\Game\GameObject\Enemy\Ghost\Ghost.cpp" />
     <ClCompile Include="Src\Application\Game\GameObject\Explosion\Explosion.cpp" />

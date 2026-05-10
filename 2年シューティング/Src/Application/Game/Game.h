@@ -51,4 +51,5 @@ private:
 	float m_ScrennAdd;
 
 	int m_PlayerLife;
+	int m_Score;
 };

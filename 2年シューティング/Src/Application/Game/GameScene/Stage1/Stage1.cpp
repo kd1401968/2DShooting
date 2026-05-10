@@ -10,14 +10,14 @@
 #include "Application/Game/Game.h"
 #include "Application/Scene.h"
 #include "Application/Game/GameScene/Stage2/Stage2.h"
-void c_Stage1::Init(int PlayerLife)
+void c_Stage1::Init(int PlayerLife,int Score)
 {
 	m_StartPos = { -800.0f,0.0f };
 
 	m_BackTex.Load("Texture/NightForest/Image without mist.png");
 	m_Player = new c_Player(PlayerLife,m_StartPos);
 	
-	m_GameUI = new c_GameUI(PlayerLife);
+	m_GameUI = new c_GameUI(PlayerLife,Score);
 
 	m_BackPos = { 0.0f,0.0f };
 	m_BackMoveX = 3;
@@ -48,6 +48,11 @@ void c_Stage1::Release()
 	}
 	mp_Eye.clear();
 
+	for (int i = 0; i < mp_Explosion.size(); i++) {
+		delete mp_Explosion[i];
+	}
+	mp_Explosion.clear();
+
 	delete m_Player;
 	delete m_GameUI;
 }
@@ -71,7 +76,7 @@ void c_Stage1::Update()
 				{
 					c_Game* game = dynamic_cast<c_Game*>(SCENE.GetNowScene());
 					if (game) {
-						game->ChangeGameScene(new c_Stage2(m_Player->GetLife()));
+						game->ChangeGameScene(new c_Stage2(m_Player->GetLife(),m_GameUI->GetScore()));
 					}
 				}
 			}
@@ -250,6 +255,7 @@ void c_Stage1::HitDec()
 			{
 				m_Player->SetBulletFlg(Hit, i);
 				mp_Ghost[j]->SetFlg(Hit);
+				m_GameUI->SetScore(100);
 				mp_Explosion.push_back(new c_Explosion());
 				mp_Explosion.back()->Init(GhostPos);
 				m_Cnt += 1;

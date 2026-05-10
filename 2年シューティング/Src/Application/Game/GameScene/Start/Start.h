@@ -6,10 +6,10 @@ class c_Start :public c_GameSceneBase
 {
 public:
 
-	c_Start(int PlayerLife) { Init(PlayerLife); }
+	c_Start(int PlayerLife,int Score) { Init(PlayerLife,Score); }
 	~c_Start() = default;
 
-	void Init(int PlayerLife);
+	void Init(int PlayerLife,int Score);
 	void Release() override;
 	void Update() override;
 	void Draw() override;
@@ -17,7 +17,6 @@ public:
 	GameSceneType GetSceneType() const override {
 		return GameSceneType::Start;
 	}
-
 
 	c_Player* m_Player;
 	c_GameUI* m_GameUI;
@@ -31,5 +30,6 @@ private:
 	float m_BackMoveX;
 
 	int m_PlayerLife;
+	int m_Score;
 	Math::Vector2 m_StartPos;
 };

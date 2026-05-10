@@ -17,7 +17,7 @@ void c_Explosion::Update()
 
 	Math::Matrix S, R, T;
 	S = Math::Matrix::CreateScale(m_Scale, m_Scale, 1);
-	T = Math::Matrix::CreateTranslation(m_Pos.x, m_Pos.y, 0);
+	T = Math::Matrix::CreateTranslation(m_Pos.x, m_Pos.y+12, 0);
 	m_Mat = S * T;
 }
 void c_Explosion::Draw()

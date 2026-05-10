@@ -26,7 +26,7 @@ void Scene::Init()
 
 	TransitionInit();
 
-	mp_NowScene = new c_Title();
+	mp_NowScene = new c_Game();
 	mp_NowScene->Init();
 }
 

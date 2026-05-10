@@ -106,6 +106,18 @@
     <Filter Include="Src\Application\Game\GameScene\Stage2">
       <UniqueIdentifier>{3216fd24-1b43-450e-9a2e-1d7fc103af67}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\Game\Effect">
+      <UniqueIdentifier>{dcb03353-eb33-47ce-b4ec-f461885368ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\Game\Effect\Rain">
+      <UniqueIdentifier>{2fd6f61c-98cf-4635-9c58-3f989994fc2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\Game\GameObject\Enemy\Boss">
+      <UniqueIdentifier>{7a7c5efe-56f5-4f12-9eb5-24d489220526}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\Game\GameObject\Bullet\EBullet\Star">
+      <UniqueIdentifier>{81821d13-3922-404c-ac00-c64e485c4c4d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -255,6 +267,15 @@
     <ClInclude Include="Src\Application\Game\GameScene\Stage2\Stage2.h">
       <Filter>Src\Application\Game\GameScene\Stage2</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\Game\Effect\Rain\Rain.h">
+      <Filter>Src\Application\Game\Effect\Rain</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Game\GameObject\Enemy\Boss\Boss.h">
+      <Filter>Src\Application\Game\GameObject\Enemy\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Game\GameObject\Bullet\EBullet\Star\Star.h">
+      <Filter>Src\Application\Game\GameObject\Bullet\EBullet\Star</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -364,6 +385,15 @@
     </ClCompile>
     <ClCompile Include="Src\Application\Game\GameScene\Stage2\Stage2.cpp">
       <Filter>Src\Application\Game\GameScene\Stage2</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Game\Effect\Rain\Rain.cpp">
+      <Filter>Src\Application\Game\Effect\Rain</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Game\GameObject\Enemy\Boss\Boss.cpp">
+      <Filter>Src\Application\Game\GameObject\Enemy\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Game\GameObject\Bullet\EBullet\Star\Star.cpp">
+      <Filter>Src\Application\Game\GameObject\Bullet\EBullet\Star</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

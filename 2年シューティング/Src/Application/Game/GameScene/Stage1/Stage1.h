@@ -13,10 +13,10 @@ class c_Stage1 :public c_GameSceneBase
 {
 public:
 
-	c_Stage1(int PlayerLife) { Init(PlayerLife); }
+	c_Stage1(int PlayerLife,int Score) { Init(PlayerLife,Score); }
 	~c_Stage1() = default;
 
-	void Init(int PlayerLife);
+	void Init(int PlayerLife,int Score);
 	void Release() override;
 	void Update() override;
 	void Draw() override;
@@ -49,6 +49,7 @@ private:
 	int m_Cnt;
 	int m_Intarval;
 	int m_PlayerLife;
+	int m_Score;
 
 	bool m_StartFlg;
 };
