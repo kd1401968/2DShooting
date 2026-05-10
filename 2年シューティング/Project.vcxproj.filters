@@ -118,6 +118,9 @@
     <Filter Include="Src\Application\Game\GameObject\Bullet\EBullet\Star">
       <UniqueIdentifier>{81821d13-3922-404c-ac00-c64e485c4c4d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\Game\GameObject\Bullet\EBullet\Mukede">
+      <UniqueIdentifier>{1c7cf1f3-6964-4284-8591-5ea400d8fa30}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -276,6 +279,9 @@
     <ClInclude Include="Src\Application\Game\GameObject\Bullet\EBullet\Star\Star.h">
       <Filter>Src\Application\Game\GameObject\Bullet\EBullet\Star</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\Game\GameObject\Bullet\EBullet\Mukade\Mukade.h">
+      <Filter>Src\Application\Game\GameObject\Bullet\EBullet\Mukede</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -394,6 +400,9 @@
     </ClCompile>
     <ClCompile Include="Src\Application\Game\GameObject\Bullet\EBullet\Star\Star.cpp">
       <Filter>Src\Application\Game\GameObject\Bullet\EBullet\Star</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Game\GameObject\Bullet\EBullet\Mukade\Mukade.cpp">
+      <Filter>Src\Application\Game\GameObject\Bullet\EBullet\Mukede</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

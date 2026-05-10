@@ -7,6 +7,7 @@
 #include "Application/Game/GameObject/Bullet/PBullet/PBullet.h"
 #include "Application/Game/GameObject/Explosion/Explosion.h"
 #include "Application/Game/GameObject/Bullet/EBullet/Star/Star.h"
+#include "Application/Game/GameObject/Bullet/EBullet/Mukade/Mukade.h"
 void c_Stage2::Init(int PlayerLife,int Score)
 {
 	m_StartPos = { -800.0f,0.0f };
@@ -180,4 +181,24 @@ void c_Stage2::HitDec2()
 			break;
 		}
 	}
+
+	for (int i = 0; i < m_Boss->mp_Mukade.size(); i++)
+	{
+		Math::Vector2 Fpos = m_Boss->mp_Mukade[i]->GetHitBoxFront();
+		Math::Vector2 Bpos = m_Boss->mp_Mukade[i]->GetHitBoxBack();
+
+		Math::Vector2 PlayerPos = m_Player->GetPos();
+		float PlayerRadius = m_Player->GetRadius().x;
+
+		bool hit = m_Hit.BoxHit(PlayerPos, PlayerRadius, Fpos, Bpos);
+
+		if (hit && m_Player->GetAlpha() >= 1.0f)
+		{
+			m_Player->SetLife();
+			mp_Explosion.push_back(new c_Explosion());
+			mp_Explosion.back()->Init(PlayerPos);
+			break;
+		}
+	}
+
 }

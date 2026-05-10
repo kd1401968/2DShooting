@@ -8,6 +8,7 @@ enum e_Action {
 	EndAction
 };
 class c_Star;
+class c_Mukade;
 class c_Boss :public c_GameObjectBase
 {
 public:
@@ -23,6 +24,7 @@ public:
 	void SetBossLife();
 
 	std::vector<c_Star*> mp_Star;
+	std::vector<c_Mukade*> mp_Mukade;
 
 private:
 

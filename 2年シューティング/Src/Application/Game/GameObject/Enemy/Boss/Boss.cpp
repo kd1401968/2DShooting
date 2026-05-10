@@ -1,5 +1,6 @@
 #include "Boss.h"
 #include "Application/Game/GameObject/Bullet/EBullet/Star/Star.h"
+#include "Application/Game/GameObject/Bullet/EBullet/Mukade/Mukade.h"
 void c_Boss::Init()
 {
 	m_Tex.Load("Texture/Boss.png");
@@ -23,6 +24,11 @@ void c_Boss::Release()
 		delete mp_Star[i];
 	}
 	mp_Star.clear();
+
+	for (int i = 0; i < mp_Mukade.size(); i++) {
+		delete mp_Mukade[i];
+	}
+	mp_Mukade.clear();
 }
 
 void c_Boss::Update(Math::Vector2 Pos)
@@ -57,10 +63,11 @@ void c_Boss::Update(Math::Vector2 Pos)
 		if (m_Rect.x >= 8&&m_ShotFlg==false)
 		{
 			m_ShotFlg = true;
-			for (int i = 0; i < 3; i++)
+			for (int i = 0; i < 2; i++)
 			{
 				mp_Star.push_back(new c_Star({ m_Pos.x - 17 * m_Scale.x, m_Pos.y + 33 * m_Scale.y }, Pos));
 			}
+			mp_Mukade.push_back(new c_Mukade({ 640.0f + 64.0f, (float)((rand() % 537) - 238) }));
 		}
 		if (m_Rect.x >= 13)
 		{
@@ -89,6 +96,23 @@ void c_Boss::Update(Math::Vector2 Pos)
 		}
 	}
 
+	for (int i = 0; i < mp_Mukade.size(); i++) {
+		mp_Mukade[i]->Update();
+	}
+
+	for (auto it = mp_Mukade.begin(); it != mp_Mukade.end(); )
+	{
+		if (!(*it)->GetMukadeLife())
+		{
+			delete* it;
+			it = mp_Mukade.erase(it);
+		}
+		else
+		{
+			++it;
+		}
+	}
+
 
 	Math::Matrix S, R, T;
 	S = Math::Matrix::CreateScale(m_Scale.x*m_LR, m_Scale.y, 1);
@@ -101,11 +125,17 @@ void c_Boss::Draw()
 	Math::Rectangle rect = { (int)m_Rect.x * 160,((int)m_Rect.y * 128)+25,160,128 };
 	Math::Color color = { 1.0f,1.0f,1.0f,1.0f };
 
+	for (int i = 0; i < mp_Mukade.size(); i++) {
+		mp_Mukade[i]->Draw();
+	}
+
 	SHADER.m_spriteShader.SetMatrix(m_Mat);
 	SHADER.m_spriteShader.DrawTex(&m_Tex, 0, -7, &rect, &color);
 
 	/*SHADER.m_spriteShader.SetMatrix(Math::Matrix::Identity);
 	SHADER.m_spriteShader.DrawBox(m_Pos.x-17*m_Scale.x, m_Pos.y+33*m_Scale.y, 10, 10, &color, true);*/
+
+	
 
 	for (int i = 0; i < mp_Star.size(); i++) {
 		mp_Star[i]->Draw();

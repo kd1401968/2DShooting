@@ -20,6 +20,21 @@ bool Hit::BulletHit(Math::Vector2 Apos, Math::Vector2 Bpos, Math::Vector2 Aradiu
 	}
 }
 
+bool Hit::BoxHit(Math::Vector2 Ppos, float Pradius, Math::Vector2 Fpos, Math::Vector2 Bpos)
+{
+	// 円の中心を四角の範囲にクランプ（最も近い点を求める）
+	float closestX = std::max(Fpos.x, std::min(Ppos.x, Bpos.x));
+	float closestY = std::max(Fpos.y, std::min(Ppos.y, Bpos.y));
+
+	// 円の中心と四角の最接近点の距離
+	float dx = Ppos.x - closestX;
+	float dy = Ppos.y - closestY;
+
+	// 距離が半径以下なら当たり
+	return (dx * dx + dy * dy) <= (Pradius * Pradius);
+
+}
+
 bool Hit::PlayerHit(Math::Vector2 Playerpos, Math::Vector2 Enemypos, Math::Vector2 Playerradius, Math::Vector2 Enemyradius)
 {
 
