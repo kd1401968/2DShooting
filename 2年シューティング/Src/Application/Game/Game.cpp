@@ -6,7 +6,7 @@ void c_Game::Init()
 {
 	m_PlayerLife = 3;
 	m_Score = 0;
-	mp_NowGameScene = new c_Stage2(m_PlayerLife,m_Score);
+	mp_NowGameScene = new c_Stage1(m_PlayerLife,m_Score);
 }
 
 void c_Game::Release()

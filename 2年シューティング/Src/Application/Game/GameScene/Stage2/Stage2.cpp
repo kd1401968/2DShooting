@@ -8,7 +8,11 @@
 #include "Application/Game/GameObject/Explosion/Explosion.h"
 #include "Application/Game/GameObject/Bullet/EBullet/Star/Star.h"
 #include "Application/Game/GameObject/Bullet/EBullet/Mukade/Mukade.h"
-void c_Stage2::Init(int PlayerLife,int Score)
+#include "Application/Game/Game.h"
+#include "Application/Scene.h"
+#include"Application/Result/Result.h"
+#include "Application/Title/Title.h"
+void c_Stage2::Init(int PlayerLife, int Score)
 {
 	m_StartPos = { -800.0f,0.0f };
 
@@ -59,17 +63,56 @@ void c_Stage2::Update()
 
 	m_Boss->Update(m_Player->GetPos());
 
+	if (m_Player->GetLife() == 0)
+	{
+		static int Count = 0;
+		Count++;
+		if (Count >= 120)
+		{
+			SCENE.ChangeScene(new c_Result(m_GameUI->GetScore(), false));
+		}
+	}
+
 	for (int i = 0; i < m_Rain.size(); i++)
 	{
 		m_Rain[i]->Update();
 	}
 
-	if (m_Player->GetPos().x + m_Player->GetRadius().x >= m_Boss->GetPos().x)
+	if (m_Player->GetPos().x >= 700)
 	{
-		m_Player->SetPos({ m_Boss->GetPos().x-m_Player->GetRadius().x,m_Player->GetPos().y});
+		SCENE.ChangeScene(new c_Result(m_GameUI->GetScore(),true));
 	}
 
 	HitDec2();
+
+	if (m_Boss->GetLife()==0)
+	{
+		static int cnt = 0;
+		cnt++;
+		if (cnt % 2 == 0)
+		{
+			if (cnt <= 60)
+			{
+				Math::Vector2 bossPos = m_Boss->GetPos();
+
+				float rx = (rand() % 100) - 50;
+				float ry = (rand() % 100) - 50;
+
+				Math::Vector2 expPos = { bossPos.x + rx, bossPos.y + ry };
+
+
+				mp_Explosion.push_back(new c_Explosion());
+				mp_Explosion.back()->Init(expPos);
+			}
+		}
+	}
+	else
+	{
+		if (m_Player->GetPos().x + m_Player->GetRadius().x >= m_Boss->GetPos().x)
+		{
+			m_Player->SetPos({ m_Boss->GetPos().x - m_Player->GetRadius().x,m_Player->GetPos().y });
+		}
+	}
 
 	if (m_Player->GetStartFlg())
 	{
@@ -128,6 +171,26 @@ void c_Stage2::Draw()
 
 void c_Stage2::HitDec2()
 {
+	static bool alreadyDone = false; // 一度だけ実行するためのフラグ
+
+	bool nowEnd = m_Boss->GetDeath();
+
+	if (!alreadyDone && nowEnd)
+	{
+		// ★ここが一回だけ実行される処理
+		m_GameUI->SetScore(50000);
+		m_Player->SetNextFlg(true);
+
+		alreadyDone = true; // 二度と入らないようにする
+	}
+
+	// ★ここより下の処理は、alreadyDone が true なら全部スキップ
+	if (alreadyDone)
+	{
+		return; // ここで関数を抜ける
+	}
+
+
 	//プレイヤーの弾とボスのの当たり判定
 	for (int i = 0; i < m_Player->mp_Bullet.size(); i++)
 	{
@@ -141,6 +204,7 @@ void c_Stage2::HitDec2()
 		{
 			m_Player->SetBulletFlg(Hit, i);
 			m_GameUI->SetScore(200);
+			m_Boss->SetBossLife();
 			mp_Explosion.push_back(new c_Explosion());
 			mp_Explosion.back()->Init(BulletPos);
 			break;

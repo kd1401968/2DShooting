@@ -318,11 +318,11 @@ void c_Mukade::Draw()
 	SHADER.m_spriteShader.SetMatrix(matrix);
 	SHADER.m_spriteShader.DrawCircle(ai.x, ai.y, 10,&color, true);*/
 
-	SHADER.m_spriteShader.SetMatrix(Math::Matrix::Identity);
-	//SHADER.m_spriteShader.DrawBox(m_pos[0].x, m_pos[0].y, m_pos[m_pos.size()-1].x, m_pos[m_pos.size() - 1].y, &color, true);
-	SHADER.m_spriteShader.DrawTriangle(m_pos[0].x, m_pos[0].y + 25, m_pos[0].x, m_pos[0].y - 25,
-		m_pos[m_pos.size() - 1].x, m_pos[m_pos.size() - 1].y - 25, &color);
-	SHADER.m_spriteShader.DrawTriangle(m_pos[0].x, m_pos[0].y + 25, m_pos[m_pos.size()-1].x, m_pos[m_pos.size()-1].y - 25,
-		m_pos[m_pos.size() - 1].x, m_pos[m_pos.size() - 1].y + 25, &color);
+	//SHADER.m_spriteShader.SetMatrix(Math::Matrix::Identity);
+	////SHADER.m_spriteShader.DrawBox(m_pos[0].x, m_pos[0].y, m_pos[m_pos.size()-1].x, m_pos[m_pos.size() - 1].y, &color, true);
+	//SHADER.m_spriteShader.DrawTriangle(m_pos[0].x, m_pos[0].y + 25, m_pos[0].x, m_pos[0].y - 25,
+	//	m_pos[m_pos.size() - 1].x, m_pos[m_pos.size() - 1].y - 25, &color);
+	//SHADER.m_spriteShader.DrawTriangle(m_pos[0].x, m_pos[0].y + 25, m_pos[m_pos.size()-1].x, m_pos[m_pos.size()-1].y - 25,
+	//	m_pos[m_pos.size() - 1].x, m_pos[m_pos.size() - 1].y + 25, &color);
 }
 

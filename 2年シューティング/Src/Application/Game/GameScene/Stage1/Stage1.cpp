@@ -10,6 +10,7 @@
 #include "Application/Game/Game.h"
 #include "Application/Scene.h"
 #include "Application/Game/GameScene/Stage2/Stage2.h"
+#include "Application/Result/Result.h"
 void c_Stage1::Init(int PlayerLife,int Score)
 {
 	m_StartPos = { -800.0f,0.0f };
@@ -61,6 +62,16 @@ void c_Stage1::Update()
 {
 	m_Player->Update();
 	m_GameUI->Update(m_Player->GetLife());
+
+	if (m_Player->GetLife() == 0)
+	{
+		static int Count = 0;
+		Count++;
+		if (Count >= 120)
+		{
+			SCENE.ChangeScene(new c_Result(m_GameUI->GetScore(), false));
+		}
+	}
 
 	if (m_Player->GetStartFlg()) {
 

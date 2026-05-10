@@ -4,6 +4,7 @@
 void c_Boss::Init()
 {
 	m_Tex.Load("Texture/Boss.png");
+	m_GateTex.Load("Texture/Gate.png");
 
 	m_Pos = { 1120.0f,0.0f };
 	m_Scale = { 10.0f,8.0f };
@@ -14,11 +15,18 @@ void c_Boss::Init()
 	m_Rect = { 0,0 };
 	m_Action = e_Action::StartAction;
 	m_ShotFlg = false;
+
+	m_GatePos[0] = { 540,55 };
+	m_GateScale.x = 15;
+	m_GRectX = 0;
+
+	m_DeathFlg = false;
 }
 
 void c_Boss::Release()
 {
 	m_Tex.Release();
+	m_GateTex.Release();
 
 	for (int i = 0; i < mp_Star.size(); i++) {
 		delete mp_Star[i];
@@ -33,6 +41,21 @@ void c_Boss::Release()
 
 void c_Boss::Update(Math::Vector2 Pos)
 {
+	if (m_Action == e_Action::EndAction)
+	{
+		for (int i = 0; i < mp_Star.size(); i++) {
+			delete mp_Star[i];
+		}
+		mp_Star.clear();
+
+		for (int i = 0; i < mp_Mukade.size(); i++) {
+			delete mp_Mukade[i];
+		}
+		mp_Mukade.clear();
+	}
+
+	if (m_Action == e_Action::EndAction)return;
+
 	switch (m_Action)
 	{
 	case e_Action::StartAction:
@@ -45,6 +68,11 @@ void c_Boss::Update(Math::Vector2 Pos)
 		break;
 	case e_Action::ActionA:
 		m_Rect.y = 2;
+		break;
+	case e_Action::Death:
+		m_Rect.y = 6;
+		m_Pos.x = 421;
+		break;
 	default:
 		break;
 	}
@@ -67,13 +95,26 @@ void c_Boss::Update(Math::Vector2 Pos)
 			{
 				mp_Star.push_back(new c_Star({ m_Pos.x - 17 * m_Scale.x, m_Pos.y + 33 * m_Scale.y }, Pos));
 			}
-			mp_Mukade.push_back(new c_Mukade({ 640.0f + 64.0f, (float)((rand() % 537) - 238) }));
+			if (rand() % 3 >= 1)
+			{
+				mp_Mukade.push_back(new c_Mukade({ 640.0f + 64.0f, (float)((rand() % 537) - 238) }));
+			}
 		}
 		if (m_Rect.x >= 13)
 		{
 			m_Rect.x = 0;
+			m_Action = e_Action::StartAction;
 			m_ShotFlg = false;
 		}
+		break;
+	case 6:
+		if (m_Rect.x >= 9)
+		{
+			m_Rect.x = 9;
+			m_Action = e_Action::EndAction;
+			m_DeathFlg = true;
+		}
+		break;
     default:
 		break;
     }
@@ -118,17 +159,46 @@ void c_Boss::Update(Math::Vector2 Pos)
 	S = Math::Matrix::CreateScale(m_Scale.x*m_LR, m_Scale.y, 1);
 	T = Math::Matrix::CreateTranslation(m_Pos.x, m_Pos.y, 0);
 	m_Mat = S * T;
+
+	m_GRectX += 0.5f;
+	if (m_GRectX >= 8)
+	{
+		m_GRectX = 0;
+	}
+	S = Math::Matrix::CreateScale(m_GateScale.x * m_LR, m_GateScale.x, 1);
+	T = Math::Matrix::CreateTranslation(m_GatePos[0].x + 220, m_GatePos[0].y, 0);
+	m_GateMat[0] = S*T;
+
+	S = Math::Matrix::CreateScale(m_GateScale.x * m_LR, m_GateScale.x, 1);
+	T = Math::Matrix::CreateTranslation(m_GatePos[0].x - 240, m_GatePos[0].y, 0);
+	m_GateMat[1] = S*T;
 }
 
 void c_Boss::Draw()
 {
-	Math::Rectangle rect = { (int)m_Rect.x * 160,((int)m_Rect.y * 128)+25,160,128 };
+	if (m_Action == e_Action::EndAction)return;
+
+	Math::Rectangle rect;
 	Math::Color color = { 1.0f,1.0f,1.0f,1.0f };
 
-	for (int i = 0; i < mp_Mukade.size(); i++) {
-		mp_Mukade[i]->Draw();
+	if (m_Pos.x == 420)
+	{
+
+		rect = { ((int)m_GRectX * 64) + 32, 0, 32, 64 };
+		SHADER.m_spriteShader.SetMatrix(m_GateMat[1]);
+		SHADER.m_spriteShader.DrawTex(&m_GateTex, 0, 0, &rect, &color);
+
+		for (int i = 0; i < mp_Mukade.size(); i++) {
+			mp_Mukade[i]->Draw();
+		}
+
+		rect = { (int)m_GRectX * 64, 0, 32, 64 };
+		SHADER.m_spriteShader.SetMatrix(m_GateMat[0]);
+		SHADER.m_spriteShader.DrawTex(&m_GateTex, 0, 0, &rect, &color);
 	}
 
+
+	rect = { (int)m_Rect.x * 160,((int)m_Rect.y * 128) + 25,160,128 };
 	SHADER.m_spriteShader.SetMatrix(m_Mat);
 	SHADER.m_spriteShader.DrawTex(&m_Tex, 0, -7, &rect, &color);
 
@@ -144,11 +214,14 @@ void c_Boss::Draw()
 
 void c_Boss::SetBossLife()
 {
+	if (m_Action == e_Action::Death)return;
+
 	m_Life--;
-	if (m_Life <= 0)
+	if (m_Life == 0)
 	{
-		m_Alive = false;
-		m_Life = 0;
+		m_Action = e_Action::Death;
+		m_Rect.x = 0;
+		//m_Life = 0;
 	}
 }
 

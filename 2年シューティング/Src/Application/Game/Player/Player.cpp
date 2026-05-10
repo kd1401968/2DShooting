@@ -103,6 +103,12 @@ void c_Player::Update()
 		{
 			m_StartFlg = true;
 		}
+
+		if (m_NextFlg == true)
+		{
+			m_Speed.x = 6.0f;
+			m_Pos.x += m_Speed.x;
+		}
 		break;
 	}
 
