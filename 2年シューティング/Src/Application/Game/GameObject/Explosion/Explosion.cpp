@@ -1,9 +1,9 @@
 #include "Explosion.h"
-void c_Explosion::Init(Math::Vector2 Pos)
+void c_Explosion::Init(Math::Vector2 Pos,float Scale)
 {
 	m_Flg = true;
 	m_Pos = Pos;
-	m_Scale = 1.0f;
+	m_Scale = Scale;
 	m_Tex.Load("Texture/Explosion.png");
 	m_Anime = 0.0f;
 }

@@ -18,10 +18,11 @@ private:
 	KdTexture m_TitleTex;
 	KdTexture m_PressTex;
 
-	Math::Matrix m_BackMat;
+	Math::Matrix m_BackMat[2];
 	Math::Matrix m_TitleMat;
 	Math::Matrix m_PressMat;
 
+	Math::Vector2 m_BackPos[2];
 	Math::Vector2 m_TitlePos;
 	Math::Vector2 m_PressPos;
 
@@ -30,5 +31,4 @@ private:
 
 	float m_Alpha;
 
-	float m_BackRectX;
 };

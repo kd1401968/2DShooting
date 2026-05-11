@@ -15,12 +15,13 @@ void c_Stage1::Init(int PlayerLife,int Score)
 {
 	m_StartPos = { -800.0f,0.0f };
 
-	m_BackTex.Load("Texture/NightForest/Image without mist.png");
+	m_BackTex.Load("Texture/NightForest/Image(1).png");
 	m_Player = new c_Player(PlayerLife,m_StartPos);
 	
 	m_GameUI = new c_GameUI(PlayerLife,Score);
 
-	m_BackPos = { 0.0f,0.0f };
+	m_BackPos[0] = { 0,0 };
+	m_BackPos[1] = { 1280,0 };
 	m_BackMoveX = 3;
 
 	mp_BigGhost.push_back(new c_BigGhost({ -1100.0f ,0.0f }));
@@ -176,25 +177,36 @@ void c_Stage1::Update()
 		}
 	}
 
+	for (int i = 0; i < 2; i++)
+	{
+		m_BackPos[i].x -= 3.2f;
+		if (m_BackPos[i].x <= -1280)
+		{
+			m_BackPos[i].x = 1280;
+		}
+	}
+
 	Math::Matrix S, R, T;
-	S = Math::Matrix::CreateScale(2.07, 2, 1);
-	T = Math::Matrix::CreateTranslation(m_BackPos.x, m_BackPos.y, 0);
-	m_BackMat = S * T;
+	S = Math::Matrix::CreateScale(2.07, 2.6, 1);
+	T = Math::Matrix::CreateTranslation(m_BackPos[0].x, m_BackPos[0].y, 0);
+	m_BackMat[0] = S * T;
+
+	S = Math::Matrix::CreateScale(2.09 * -1, 2.6, 1);
+	T = Math::Matrix::CreateTranslation(m_BackPos[1].x, m_BackPos[1].y, 0);
+	m_BackMat[1] = S * T;
 }
 
 void c_Stage1::Draw()
 {
-	Math::Rectangle Rect;
+	Math::Rectangle rect;
 	Math::Color color = { 1.0f,1.0f,1.0f,1.0f };
 
-	static float RectX = 0;
-	RectX += m_BackMoveX;
-	if (RectX <= -620) {
-		RectX = 0;
+	for (int i = 0; i < 2; i++)
+	{
+		rect = { 0,0,620,360 };
+		SHADER.m_spriteShader.SetMatrix(m_BackMat[i]);
+		SHADER.m_spriteShader.DrawTex(&m_BackTex, 0, 0, &rect, &color);
 	}
-	Rect = { (int)RectX,0,620,360 };
-	SHADER.m_spriteShader.SetMatrix(m_BackMat);
-	SHADER.m_spriteShader.DrawTex(&m_BackTex, 0, 0, &Rect, &color);
 
 	if (m_Player->GetStartFlg())
 	{
@@ -245,7 +257,7 @@ void c_Stage1::HitDec()
 			}
 			mp_Ghost[i]->SetFlg(Hit);
 			mp_Explosion.push_back(new c_Explosion());
-			mp_Explosion.back()->Init(GhostPos);
+			mp_Explosion.back()->Init(GhostPos, 1.0f);
 			break;
 		}
 		if (!Hit)continue;
@@ -268,7 +280,7 @@ void c_Stage1::HitDec()
 				mp_Ghost[j]->SetFlg(Hit);
 				m_GameUI->SetScore(100);
 				mp_Explosion.push_back(new c_Explosion());
-				mp_Explosion.back()->Init(GhostPos);
+				mp_Explosion.back()->Init(GhostPos, 1.0f);
 				m_Cnt += 1;
 				break;
 			}
@@ -300,7 +312,7 @@ void c_Stage1::HitDec()
 		{
 			m_Player->SetLife();
 			mp_Explosion.push_back(new c_Explosion());
-			mp_Explosion.back()->Init(PlayerPos);
+			mp_Explosion.back()->Init(PlayerPos, 1.0f);
 		}
 
 		if (PlayerPos.x <= BigGhostPos.x)
@@ -323,7 +335,7 @@ void c_Stage1::HitDec()
 			m_Player->SetBulletFlg(Hit, i);
 			mp_BigGhost[0]->BackGhost();
 			mp_Explosion.push_back(new c_Explosion());
-			mp_Explosion.back()->Init(BulletPos);
+			mp_Explosion.back()->Init(BulletPos, 1.0f);
 			break;
 		}
 	}
@@ -339,7 +351,7 @@ void c_Stage1::HitDec()
 		{
 			m_Player->SetLife();
 			mp_Explosion.push_back(new c_Explosion());
-			mp_Explosion.back()->Init(PlayerPos);
+			mp_Explosion.back()->Init(PlayerPos, 1.0f);
 			mp_Eye[i]->m_IceBullet->SetFlg(Hit);
 			break;
 		}

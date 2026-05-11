@@ -33,10 +33,11 @@ bool Application::Init(int w, int h)
 	//===================================================================
 	// ウィンドウ作成
 	//===================================================================
-	if (m_window.Create(w, h, "Devil Rebolt", "Window") == false) {
+	if (m_window.Create(w, h, "DEVIL REVOLT", "Window") == false) {
 		MessageBoxA(nullptr, "ウィンドウ作成に失敗", "エラー", MB_OK);
 		return false;
 	}
+	
 
 	//===================================================================
 	// フルスクリーン確認
@@ -246,6 +247,9 @@ void Application::Execute()
 			baseTime = st;
 			count = 0;
 		}
+
+		std::string title = "DEVIL REVOLT  |  FPS: " + std::to_string(m_fps);
+		SetWindowTextA(m_window.GetWndHandle(), title.c_str());
 
 	}
 

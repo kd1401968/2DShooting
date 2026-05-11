@@ -2,9 +2,9 @@
 #include "Application/Game/GameObject/Bullet/EBullet/IceBullet/IceBullet.h"
 void c_Eye::Init(float x, float y, float scale)
 {
-	Eye1Tex.Load("Texture/Eye/Eye1.png");
-	Eye2Tex.Load("Texture/Eye/Eye2.png");
-	Eye3Tex.Load("Texture/Eye/Eye3.png");
+	Eye1Tex.Load("Texture/Eye/Eye5.png");
+	Eye2Tex.Load("Texture/Eye/Eye6.png");
+	Eye3Tex.Load("Texture/Eye/Eye4.png");
 
 	m_Pos[0] = { x,y };
 	m_Scale = scale;

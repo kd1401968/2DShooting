@@ -137,7 +137,7 @@ void c_Mukade::Update()
 		}
 
 		float baseAngle = DirectX::XMConvertToRadians(180); // 左向き
-		float shake = sinf(m_counst * 0.01f) * DirectX::XMConvertToRadians(10);
+		float shake = sinf(m_counst * 0.02f) * DirectX::XMConvertToRadians(10);
 		m_mkd[0].angle = baseAngle + shake;
 
 		//ムカデの体の更新処理

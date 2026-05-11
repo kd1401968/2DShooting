@@ -16,14 +16,15 @@ void c_Stage2::Init(int PlayerLife, int Score)
 {
 	m_StartPos = { -800.0f,0.0f };
 
-	m_BackTex.Load("Texture/NightForest/Image without mist.png");
+	m_BackTex.Load("Texture/NightForest/Image(1).png");
 	m_RainTex.Load("Texture/rain.png");
 
 	m_Player = new c_Player(PlayerLife, m_StartPos);
 
 	m_GameUI = new c_GameUI(PlayerLife,Score);
 
-	m_BackPos = { 0.0f,0.0f };
+	m_BackPos[0] = { 0,0 };
+	m_BackPos[1] = { 1280,0 };
 
 	m_StartFlg = false;
 
@@ -102,7 +103,7 @@ void c_Stage2::Update()
 
 
 				mp_Explosion.push_back(new c_Explosion());
-				mp_Explosion.back()->Init(expPos);
+				mp_Explosion.back()->Init(expPos,1.0f);
 			}
 		}
 	}
@@ -134,20 +135,36 @@ void c_Stage2::Update()
 		}
 	}
 
+	for (int i = 0; i < 2; i++)
+	{
+		m_BackPos[i].x -= 0.0f;
+		if (m_BackPos[i].x <= -1280)
+		{
+			m_BackPos[i].x = 1280;
+		}
+	}
+
 	Math::Matrix S, R, T;
-	S = Math::Matrix::CreateScale(2.07, 2, 1);
-	T = Math::Matrix::CreateTranslation(m_BackPos.x, m_BackPos.y, 0);
-	m_BackMat = S * T;
+	S = Math::Matrix::CreateScale(2.07, 2.6, 1);
+	T = Math::Matrix::CreateTranslation(m_BackPos[0].x, m_BackPos[0].y, 0);
+	m_BackMat[0] = S * T;
+
+	S = Math::Matrix::CreateScale(2.09 * -1, 2.6, 1);
+	T = Math::Matrix::CreateTranslation(m_BackPos[1].x, m_BackPos[1].y, 0);
+	m_BackMat[1] = S * T;
 }
 
 void c_Stage2::Draw()
 {
-	Math::Rectangle Rect;
+	Math::Rectangle rect;
 	Math::Color color = { 0.7f,0.7f,0.7f,1.0f };
 
-	Rect = { 0,0,620,360 };
-	SHADER.m_spriteShader.SetMatrix(m_BackMat);
-	SHADER.m_spriteShader.DrawTex(&m_BackTex, 0, 0, &Rect, &color);
+	for (int i = 0; i < 2; i++)
+	{
+		rect = { 0,0,620,360 };
+		SHADER.m_spriteShader.SetMatrix(m_BackMat[i]);
+		SHADER.m_spriteShader.DrawTex(&m_BackTex, 0, 0, &rect, &color);
+	}
 
 	m_Boss->Draw();
 
@@ -206,7 +223,7 @@ void c_Stage2::HitDec2()
 			m_GameUI->SetScore(200);
 			m_Boss->SetBossLife();
 			mp_Explosion.push_back(new c_Explosion());
-			mp_Explosion.back()->Init(BulletPos);
+			mp_Explosion.back()->Init(BulletPos, 1.0f);
 			break;
 		}
 	}
@@ -220,7 +237,7 @@ void c_Stage2::HitDec2()
 		{
 			m_Player->SetLife();
 			mp_Explosion.push_back(new c_Explosion());
-			mp_Explosion.back()->Init(PlayerPos);
+			mp_Explosion.back()->Init(PlayerPos, 1.0f);
 		}
 
 		if (PlayerPos.x >= BossPos.x)
@@ -240,7 +257,7 @@ void c_Stage2::HitDec2()
 		{
 			m_Player->SetLife();
 			mp_Explosion.push_back(new c_Explosion());
-			mp_Explosion.back()->Init(PlayerPos);
+			mp_Explosion.back()->Init(PlayerPos, 1.0f);
 			m_Boss->mp_Star[i]->SetFlg(Hit);
 			break;
 		}
@@ -260,7 +277,7 @@ void c_Stage2::HitDec2()
 		{
 			m_Player->SetLife();
 			mp_Explosion.push_back(new c_Explosion());
-			mp_Explosion.back()->Init(PlayerPos);
+			mp_Explosion.back()->Init(PlayerPos, 1.0f);
 			break;
 		}
 	}

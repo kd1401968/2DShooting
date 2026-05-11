@@ -5,7 +5,7 @@ public:
 
 	c_Explosion() {}
 	~c_Explosion() { Release(); }
-	void Init(Math::Vector2 Pos);
+	void Init(Math::Vector2 Pos,float Scale);
 	void Update();
 	void Draw();
 

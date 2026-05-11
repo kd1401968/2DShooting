@@ -40,10 +40,12 @@ private:
 
 	Hit m_Hit;
 
-	KdTexture m_BackTex;
-	Math::Matrix m_BackMat;
+	Math::Matrix m_BackMat[2];
+	
+	Math::Vector2 m_BackPos[2];
 
-	Math::Vector2 m_BackPos;
+	KdTexture m_BackTex;
+	
 	Math::Vector2 m_StartPos;
 	float m_BackMoveX;
 	int m_Cnt;
