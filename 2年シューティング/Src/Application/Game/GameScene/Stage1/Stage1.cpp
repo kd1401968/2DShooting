@@ -76,7 +76,7 @@ void c_Stage1::Update()
 
 	if (m_Player->GetStartFlg()) {
 
-		if (m_Cnt >= 10)
+		if (m_Cnt >= 23)
 		{
 			mp_BigGhost[0]->EndFlg();
 

@@ -10,7 +10,7 @@ void c_Boss::Init()
 	m_Scale = { 10.0f,8.0f };
 	m_Radius = { 6.0f*m_Scale.x,20.0f*m_Scale.y };
 	//m_Radius = { 80.0f, 64.0f };
-	m_Life = 10;
+	m_Life = 25;
 	m_LR = -1;
 	m_Rect = { 0,0 };
 	m_Action = e_Action::StartAction;
