@@ -2,7 +2,7 @@
 #include "Application/Game/GameObject/Bullet/EBullet/IceBullet/IceBullet.h"
 void c_Eye::Init(float x, float y, float scale)
 {
-	Eye1Tex.Load("Texture/Eye/Eye5.png");
+	Eye1Tex.Load("Texture/Eye/Eye10.png");
 	Eye2Tex.Load("Texture/Eye/Eye6.png");
 	Eye3Tex.Load("Texture/Eye/Eye4.png");
 
@@ -133,12 +133,14 @@ void c_Eye::Draw()
 	Math::Rectangle rect;
 	Math::Color color;
 
-	color = { 1,1,1,m_Alpha };
+	color = { 1.5,1.5,1.5,m_Alpha };
 
 	//ñ⁄
 	rect = { 0,0,456,489 };
 	SHADER.m_spriteShader.SetMatrix(Eye1Mat);
 	SHADER.m_spriteShader.DrawTex(&Eye1Tex, 0, 0, &rect, &color);
+
+	color = { 1,1,1,m_Alpha };
 	//çïñ⁄ÇÃå„ÇÎÇÃÇ‚Ç¬
 	rect = { 0,0,311,316 };
 	SHADER.m_spriteShader.SetMatrix(Eye2Mat);

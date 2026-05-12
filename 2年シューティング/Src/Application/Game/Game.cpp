@@ -21,6 +21,19 @@ void c_Game::Update()
 
 	//‰æ–ÊØ‚è‘Ö‚¦‚ÌXVˆ—
 	if (m_isTransition)TransitionUpdate();
+
+	if (GetAsyncKeyState('4') & 0x8000)
+	{
+		ChangeGameScene(new c_Start(m_PlayerLife, m_Score));
+	}
+	if (GetAsyncKeyState('5') & 0x8000)
+	{
+		ChangeGameScene(new c_Stage1(m_PlayerLife, m_Score));
+	}
+	if (GetAsyncKeyState('6') & 0x8000)
+	{
+		ChangeGameScene(new c_Stage2(m_PlayerLife, m_Score));
+	}
 }
 
 void c_Game::Draw()

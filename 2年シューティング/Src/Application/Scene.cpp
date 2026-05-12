@@ -19,6 +19,19 @@ void Scene::Update()
 
 	//‰æ–ÊØ‚è‘Ö‚¦‚ÌXVˆ—
 	if (m_isTransition)TransitionUpdate();
+
+	if (GetAsyncKeyState('1') & 0x8000)
+	{
+		ChangeScene(new c_Title());
+	}
+	if (GetAsyncKeyState('2') & 0x8000)
+	{
+		ChangeScene(new c_Game());
+	}
+	if (GetAsyncKeyState('3') & 0x8000)
+	{
+		ChangeScene(new c_Result(0,false));
+	}
 }
 
 void Scene::Init()
