@@ -5,12 +5,14 @@ enum e_Action {
 	ActionA,
 	ActionB,
 	ActionC,
+	Actic,
 	Death,
 	EndAction
 };
 class c_Star;
 class c_Mukade;
 class c_Gate;
+class c_BigGhost;
 class c_Boss :public c_GameObjectBase
 {
 public:
@@ -25,10 +27,14 @@ public:
 	Math::Vector2 GetRadius() { return m_Radius; }
 	int GetLife() { return m_Life; }
 	bool GetDeath() { return m_DeathFlg; }
+	bool GetLast() { return m_LastFlg; }
+	float GetAlpha() { return m_Alpha; }
 	void SetBossLife();
 
 	std::vector<c_Star*> mp_Star;
 	std::vector<c_Mukade*> mp_Mukade;
+	std::vector<c_BigGhost*> mp_BigGhost;
+
 
 private:
 
@@ -57,6 +63,8 @@ private:
 	bool m_Alive;
 	bool m_ShotFlg;
 	bool m_DeathFlg;
+	bool m_LastFlg;
 
 	float m_GRectX;
+	float m_Alpha;
 };

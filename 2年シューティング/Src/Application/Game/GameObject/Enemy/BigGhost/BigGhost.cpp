@@ -40,7 +40,7 @@ void c_BigGhost::Update()
 		{
 			if (m_Pos.x >= 740)
 			{
-				m_Pos.x += m_Speed/3;
+				m_Pos.x -= m_Speed/3;
 			}
 			else
 			{
@@ -72,12 +72,12 @@ void c_BigGhost::Draw()
 
 void c_BigGhost::GoGhost()
 {
-	m_Pos.x -= m_Speed*1.5f;
+	m_Pos.x -= m_Speed*1.8f;
 }
 
 void c_BigGhost::BackGhost()
 {
-	m_Pos.x += m_Speed;
+	m_Pos.x += m_Speed*2.0f;
 	if (m_LR == 1)
 	{
 		if (m_Pos.x > m_StartPos.x)
@@ -102,8 +102,8 @@ void c_BigGhost::EndFlg()
 	dir.x *= invLen;
 	dir.y *= invLen;
 
-	m_Pos.x -= dir.x * m_Speed/5;
-	m_Pos.y -= dir.y * m_Speed/5;
+	m_Pos.x -= dir.x * m_Speed/7;
+	m_Pos.y -= dir.y * m_Speed/7;
 
 	if(m_StartPos==m_Pos)
 	{

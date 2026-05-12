@@ -17,12 +17,15 @@ private:
 	KdTexture m_BackTex;
 	KdTexture m_PressTex;
 	KdTexture m_EvaTex;
+	KdTexture m_ResultTex;
 
 	Math::Matrix m_BackMat;
 	Math::Matrix m_PressMat;
 	Math::Matrix m_EvaMat;
+	Math::Matrix m_ResultMat;
 
 	Math::Vector2 m_PressPos;
+	Math::Vector2 m_ResultRect;
 
 	float m_Alpha;
 

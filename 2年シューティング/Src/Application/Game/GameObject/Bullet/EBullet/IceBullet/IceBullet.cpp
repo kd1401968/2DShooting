@@ -51,7 +51,7 @@ void c_IceBullet::Update()
 void c_IceBullet::Draw()
 {
 	Math::Rectangle Rect;
-	Math::Color color = { 1.0f,0.0f,1.0f,1.0f };
+	Math::Color color = { 1.0f,0.0f,0.0f,1.0f };
 	Rect = { (int)m_RectX*64,0,64,64 };
 	SHADER.m_spriteShader.SetMatrix(m_Mat);
 	SHADER.m_spriteShader.DrawTex(&m_Tex, 0, 0, &Rect, &color);

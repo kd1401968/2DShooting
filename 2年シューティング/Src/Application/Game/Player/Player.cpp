@@ -75,6 +75,7 @@ void c_Player::Update()
 	{
 	case GameSceneType::Start:
 		m_StartFlg = true;
+		//m_NextFlg = false;
 		break;
 
 	case GameSceneType::Stage1:
@@ -129,33 +130,36 @@ void c_Player::Update()
 	if (!m_StartFlg) return;
 
 	if (m_Alive == 1) {
-		//自機の移動
-		if (GetAsyncKeyState(VK_RIGHT) & 0x8000 || GetAsyncKeyState('D') & 0x8000) {
-			m_LR = -1;
-			m_Speed.x = 1.0f;
-		}
-		else if (GetAsyncKeyState(VK_LEFT) & 0x8000 || GetAsyncKeyState('A') & 0x8000) {
-			m_Speed.x = -1.0f;
-			m_LR = 1;
-		}
-		else
-		{
-			m_Speed.x = 0.0f;
-		}
-		if (GetAsyncKeyState(VK_UP) & 0x8000 || GetAsyncKeyState('W') & 0x8000) {
-			m_Speed.y = 1.0f;
-		}
-		else if (GetAsyncKeyState(VK_DOWN) & 0x8000 || GetAsyncKeyState('S') & 0x8000) {
-			m_Speed.y = -1.0f;
-		}
-		else
-		{
-			m_Speed.y = 0.0f;
-		}
+		if (!m_NextFlg) {
+			//自機の移動
+			if (GetAsyncKeyState(VK_RIGHT) & 0x8000 || GetAsyncKeyState('D') & 0x8000) {
+				m_LR = -1;
+				m_Speed.x = 1.0f;
+			}
+			else if (GetAsyncKeyState(VK_LEFT) & 0x8000 || GetAsyncKeyState('A') & 0x8000) {
+				m_Speed.x = -1.0f;
+				m_LR = 1;
+			}
+			else
+			{
+				m_Speed.x = 0.0f;
+			}
+			if (GetAsyncKeyState(VK_UP) & 0x8000 || GetAsyncKeyState('W') & 0x8000) {
+				m_Speed.y = 1.0f;
+			}
+			else if (GetAsyncKeyState(VK_DOWN) & 0x8000 || GetAsyncKeyState('S') & 0x8000) {
+				m_Speed.y = -1.0f;
+			}
+			else
+			{
+				m_Speed.y = 0.0f;
+			}
 
-		m_Speed.Normalize();
 
-		m_Speed *= 6.0f;
+			m_Speed.Normalize();
+
+			m_Speed *= 6.0f;
+		}
 
 		m_Pos += m_Speed;
 
@@ -179,7 +183,7 @@ void c_Player::Update()
 		}
 
 		//画面外に出ないようにする
-		if (!m_NextFlg)
+		if (!m_NextFlg&&type!=GameSceneType::Start)
 		{
 			if (m_Pos.x > (640 - m_Radius.x))	m_Pos.x = (640 - m_Radius.x);
 		}

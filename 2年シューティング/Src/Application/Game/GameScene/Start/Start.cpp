@@ -116,7 +116,7 @@ void c_Start::Update()
 				{
 					mp_Explosion.push_back(new c_Explosion());
 					mp_Explosion.back()->Init({0,70}, 6.0f);
-					m_Player->SetNextFlg(true);
+					m_Player->SetNextFlg(false);
 				}
 				break;
 			}

@@ -95,7 +95,7 @@ void c_Stage1::Update()
 		}
 		else
 		{
-			if (rand() % 40 == 0)
+			if (rand() % 30 == 0)
 			{
 				Math::Vector2 GhostPos = { 640.0f + 64.0f,(float)((rand() % 537) - 238) };
 				mp_Ghost.push_back(new c_Ghost(GhostPos));

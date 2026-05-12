@@ -9,10 +9,14 @@ void c_Result::Init(int Score, bool Flg)
 	if (Flg == true)
 	{
 		m_EvaTex.Load("Texture/S.png");
+		m_ResultTex.Load("Texture/clear.png");
+		m_ResultRect = { 398,62 };
 	}
 	else
 	{
 		m_EvaTex.Load("Texture/B.png");
+		m_ResultTex.Load("Texture/over.png");
+		m_ResultRect = {396,92};
 	}
 
 	m_Alpha = 0.0f;
@@ -49,6 +53,7 @@ void c_Result::Release()
 	m_BackTex.Release();
 	m_EvaTex.Release();
 	m_NumTex.Release();
+	m_ResultTex.Release();
 }
 
 void c_Result::Update()
@@ -111,6 +116,10 @@ void c_Result::Update()
 	S = Math::Matrix::CreateScale(m_PressScale, m_PressScale, 1);
 	T = Math::Matrix::CreateTranslation(m_PressPos.x, m_PressPos.y, 0);
 	m_PressMat = S * T;
+
+	S = Math::Matrix::CreateScale(1.3, 1.3, 1);
+	T = Math::Matrix::CreateTranslation(250, 100, 0);
+	m_ResultMat = S * T;
 }
 
 void c_Result::Draw()
@@ -127,6 +136,11 @@ void c_Result::Draw()
 	color = { 1.0f,1.0f,1.0f,m_Alpha };
 	SHADER.m_spriteShader.SetMatrix(m_EvaMat);
 	SHADER.m_spriteShader.DrawTex(&m_EvaTex, 0, 0, &rect, &color);
+
+	rect = { 0,0, (int)m_ResultRect.x,(int)m_ResultRect.y};
+	color = { 1.0f,1.0f,1.0f,m_Alpha };
+	SHADER.m_spriteShader.SetMatrix(m_ResultMat);
+	SHADER.m_spriteShader.DrawTex(&m_ResultTex, 0, 0, &rect, &color);
 
 	for (int i = 0; i < MaxDigits; i++)
 	{
