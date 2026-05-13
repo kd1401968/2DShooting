@@ -100,22 +100,26 @@ void c_Boss::Update(Math::Vector2 Pos)
 		}
 		break;
 	case e_Action::ActionB:
+		for (int i = 0; i < mp_Star.size(); i++) {
+			delete mp_Star[i];
+		}
+		mp_Star.clear();
 		m_Rect.y = 0;
 		m_Alpha = 0.5f;
 		m_Pos.x += 3;
-		if (m_Pos.x >= 750)
+		if (m_Pos.x >= 870)
 		{
-			m_Pos.x = -750;
+			m_Pos.x = -870;
 			m_LR = 1;
 			m_Action = e_Action::ActionC;
 		}
 		break;
 	case e_Action::ActionC:
 		m_Pos.x += 3;
-		if (m_Pos.x >= -420)
+		if (m_Pos.x >= -430)
 		{
 			m_LastFlg = true;
-			m_Pos.x = -420;
+			m_Pos.x = -430;
 			m_Alpha = 1.0f;
 		}
 		break;

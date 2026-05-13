@@ -36,6 +36,7 @@ private:
 	KdTexture m_SignTex;
 	KdTexture m_PresonTex;
 	KdTexture m_KeyTex[2];
+	KdTexture m_ArrowTex;
 
 	Math::Matrix m_BackMat;
 	Math::Matrix m_ChainMat[3];
@@ -44,6 +45,7 @@ private:
 	Math::Matrix m_SignMat[2];
 	Math::Matrix m_PresonMat;
 	Math::Matrix m_KeyMat[2];
+	Math::Matrix m_ArrowMat;
 
 	int m_ChainRectY[3];
 	int m_PlayerRectX[3];
@@ -51,6 +53,8 @@ private:
 	Math::Vector2 m_KeyRect[2];
 
 	int m_Cnt;
+
+	float m_ArrowAlpha;
 
 
 	Math::Vector2 m_BackPos;

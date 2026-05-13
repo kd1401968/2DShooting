@@ -19,6 +19,7 @@ void c_Start::Init(int PlayerLife,int Score)
 	m_PresonTex.Load("Texture/preson.png");
 	m_KeyTex[0].Load("Texture/space.png");
 	m_KeyTex[1].Load("Texture/key.png");
+	m_ArrowTex.Load("Texture/arrow.png");
 	m_Player = new c_Player(PlayerLife,m_StartPos);
 
 	m_GameUI = new c_GameUI(PlayerLife,Score);
@@ -43,6 +44,7 @@ void c_Start::Release()
 	m_PresonTex.Release();
 	m_KeyTex[0].Release();
 	m_KeyTex[1].Release();
+	m_ArrowTex.Release();
 
 	for (int i = 0; i < mp_Explosion.size(); i++) {
 		delete mp_Explosion[i];
@@ -119,6 +121,28 @@ void c_Start::Update()
 					m_Player->SetNextFlg(false);
 				}
 				break;
+			}
+		}
+	}
+	else
+	{
+		static bool inv = false;
+		if (!inv)
+		{
+			m_ArrowAlpha += 0.005f;
+			if (m_ArrowAlpha >= 0.5f)
+			{
+				m_ArrowAlpha = 0.5f;
+				inv = true;
+			}
+		}
+		else
+		{
+			m_ArrowAlpha -= 0.005f;
+			if (m_ArrowAlpha <= 0.0f)
+			{
+				m_ArrowAlpha = 0.0f;
+				inv = false;
 			}
 		}
 	}
@@ -232,6 +256,10 @@ void c_Start::Update()
 	S = Math::Matrix::CreateScale(0.8 , 0.8, 1);
 	T = Math::Matrix::CreateTranslation(-370, 110, 0);
 	m_BulletMat = S * T;
+
+	S = Math::Matrix::CreateScale(0.8, 0.8, 1);
+	T = Math::Matrix::CreateTranslation(550, -50, 0);
+	m_ArrowMat = S * T;
 }
 
 void c_Start::Draw()
@@ -292,5 +320,12 @@ void c_Start::Draw()
 		color = { 1.0f,1.0f,1.0f,1.0f };
 		SHADER.m_spriteShader.SetMatrix(m_PresonMat);
 		SHADER.m_spriteShader.DrawTex(&m_PresonTex, 0, 0, &rect, &color);
+	}
+	else
+	{
+		rect = { 0,0,100,75 };
+		color = { 1.0f,1.0f,1.0f,m_ArrowAlpha };
+		SHADER.m_spriteShader.SetMatrix(m_ArrowMat);
+		SHADER.m_spriteShader.DrawTex(&m_ArrowTex, 0, 0, &rect, &color);
 	}
 }

@@ -79,6 +79,23 @@ void c_Stage2::Update()
 		m_Rain[i]->Update();
 	}
 
+	if (m_Boss->GetLast())
+	{
+		for (int i = 0; i < m_Rain.size(); i++)
+		{
+			m_Rain[i]->m_Kazamuki++;
+			if (m_Rain[i]->m_Kazamuki >= 20)
+			{
+				m_Rain[i]->m_Kazamuki = 20;
+			}
+		}
+
+		for (int i = m_Rain.size(); i < 180; i++)
+		{
+			m_Rain.push_back(new c_Rain(m_RainTex));
+		}
+	}
+
 	if (m_Player->GetPos().x >= 700)
 	{
 		SCENE.ChangeScene(new c_Result(m_GameUI->GetScore(),true));
@@ -109,9 +126,12 @@ void c_Stage2::Update()
 	}
 	else
 	{
-		if (m_Player->GetPos().x + m_Player->GetRadius().x >= m_Boss->GetPos().x)
+		if(m_Boss->GetLast())
 		{
-			m_Player->SetPos({ m_Boss->GetPos().x - m_Player->GetRadius().x,m_Player->GetPos().y });
+			if (m_Player->GetPos().x - m_Player->GetRadius().x <= m_Boss->GetPos().x)
+			{
+				m_Player->SetPos({ m_Boss->GetPos().x + m_Player->GetRadius().x,m_Player->GetPos().y });
+			}
 		}
 	}
 
@@ -207,6 +227,7 @@ void c_Stage2::HitDec2()
 		return; // ここで関数を抜ける
 	}
 
+	if (m_Boss->GetAlpha() < 1.0f)return;
 
 	//プレイヤーの弾とボスのの当たり判定
 	for (int i = 0; i < m_Player->mp_Bullet.size(); i++)
@@ -240,9 +261,19 @@ void c_Stage2::HitDec2()
 			mp_Explosion.back()->Init(PlayerPos, 1.0f);
 		}
 
-		if (PlayerPos.x >= BossPos.x)
+		if (!m_Boss->GetLast())
 		{
-			m_Player->SetPos({ BossPos.x , PlayerPos.y });
+			if (PlayerPos.x >= BossPos.x)
+			{
+				m_Player->SetPos({ BossPos.x , PlayerPos.y });
+			}
+		}
+		else
+		{
+			if (PlayerPos.x <= BossPos.x)
+			{
+				m_Player->SetPos({ BossPos.x , PlayerPos.y });
+			}
 		}
 	}
 

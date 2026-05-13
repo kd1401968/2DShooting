@@ -30,18 +30,16 @@ public:
 	bool GetLast() { return m_LastFlg; }
 	float GetAlpha() { return m_Alpha; }
 	void SetBossLife();
+	e_Action GetAction() { return m_Action; }
 
 	std::vector<c_Star*> mp_Star;
 	std::vector<c_Mukade*> mp_Mukade;
 	std::vector<c_BigGhost*> mp_BigGhost;
 
-
 private:
 
 	void Init()override;
 	void Release()override;
-
-	e_Action m_Action;
 
 	KdTexture m_Tex;
 	KdTexture m_GateTex;
@@ -55,6 +53,8 @@ private:
 	Math::Vector2 m_Rect;
 	Math::Vector2 m_GatePos[3];
 	Math::Vector2 m_GateScale;
+
+	e_Action m_Action;
 
 	int m_Life;
 	int m_LR;

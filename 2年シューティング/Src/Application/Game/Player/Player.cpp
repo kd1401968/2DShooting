@@ -160,6 +160,10 @@ void c_Player::Update()
 
 			m_Speed *= 6.0f;
 		}
+		else
+		{
+			m_LR = -1;
+		}
 
 		m_Pos += m_Speed;
 
