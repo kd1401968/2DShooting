@@ -3,6 +3,7 @@
 #include "Application/Game/GameObject/Bullet/EBullet/Mukade/Mukade.h"
 #include "Application/Game/GameObject/Enemy/BigGhost/BigGhost.h"
 #include "Application/Game/GameObject/Bullet/EBullet/Spider/Spider.h"
+#include "Application/Game/GameObject/Bullet/EBullet/Thorns/Thorns.h"
 void c_Boss::Init()
 {
 	m_Tex.Load("Texture/Boss.png");
@@ -30,7 +31,8 @@ void c_Boss::Init()
 
 	m_Alpha = 0.5f;
 
-	mp_Spider.push_back(new c_Spider());
+	//mp_Spider.push_back(new c_Spider());
+	//mp_Thorns.push_back(new c_Thorns());
 }
 
 void c_Boss::Release()
@@ -52,6 +54,11 @@ void c_Boss::Release()
 		delete mp_Spider[i];
 	}
 	mp_Spider.clear();
+
+	for (int i = 0; i < mp_Thorns.size(); i++) {
+		delete mp_Thorns[i];
+	}
+	mp_Thorns.clear();
 
 	for (int i = 0; i < mp_BigGhost.size(); i++) {
 		delete mp_BigGhost[i];
@@ -92,6 +99,7 @@ void c_Boss::Update(Math::Vector2 Pos)
 
 	switch (m_Action)
 	{
+		//“üê
 	case e_Action::StartAction:
 		m_Pos.x -= 3;
 		if (m_Pos.x <= 420)
@@ -101,6 +109,7 @@ void c_Boss::Update(Math::Vector2 Pos)
 			m_Action = e_Action::ActionA;
 		}
 		break;
+		//ñU‚è@UŒ‚
 	case e_Action::ActionA:
 		m_Rect.y = 2;
 		if (m_Life <= 12)
@@ -108,6 +117,7 @@ void c_Boss::Update(Math::Vector2 Pos)
 			m_Action = e_Action::ActionB;
 		}
 		break;
+		//‘O”¼‘Þê	Œã”¼“üê
 	case e_Action::ActionB:
 		for (int i = 0; i < mp_Star.size(); i++) {
 			delete mp_Star[i];
@@ -124,6 +134,7 @@ void c_Boss::Update(Math::Vector2 Pos)
 			m_Action = e_Action::ActionC;
 		}
 		break;
+		//Œã”¼íŠJŽn
 	case e_Action::ActionC:
 		m_Pos.x += 3;
 		if (m_Pos.x >= -430)
@@ -131,7 +142,10 @@ void c_Boss::Update(Math::Vector2 Pos)
 			m_LastFlg = true;
 			m_Pos.x = -430;
 			m_Alpha = 1.0f;
-			m_Rect.y = 2;
+			if (!m_ShotFlg)
+			{
+				m_Rect.y = 2;
+			}
 		}
 		break;
 	case e_Action::Death:
@@ -162,7 +176,7 @@ void c_Boss::Update(Math::Vector2 Pos)
 				m_ShotFlg = true;
 				for (int i = 0; i < 2; i++)
 				{
-					mp_Star.push_back(new c_Star({ m_Pos.x - 17 * m_Scale.x, m_Pos.y + 33 * m_Scale.y }, Pos));
+					mp_Star.push_back(new c_Star({ m_Pos.x - 17 * m_Scale.x, m_Pos.y + 33 * m_Scale.y }, Pos,1));
 				}
 				if (rand() % 3 == 0)
 				{
@@ -178,21 +192,39 @@ void c_Boss::Update(Math::Vector2 Pos)
 		}
 		else
 		{
+			int action = rand() % 2;
 			if (m_Rect.x >= 8 && m_ShotFlg == false)
 			{
+				
+				switch (action)
+				{
+				case 0:
+					mp_Thorns.push_back(new c_Thorns());
+					break;
+				case 1:
+					mp_Spider.push_back(new c_Spider());
+					break;
+				default:
+					break;
+				}
+				mp_Star.push_back(new c_Star({ m_Pos.x + 17 * m_Scale.x, m_Pos.y + 33 * m_Scale.y }, Pos, -1));
+				
+				m_ShotFlg = true;
 			}
 			if (m_Rect.x >= 13)
 			{
 				m_Rect.x = 0;
 
-				if (rand() % 3 == 0)
+
+				for (int i = 0; i < mp_BigGhost.size(); i++)
 				{
-					for (int i = 0; i < mp_BigGhost.size(); i++)
-					{
-						mp_BigGhost[i]->GoGhost();
-					}
+					mp_BigGhost[i]->GoGhost();
 				}
-				m_ShotFlg = false;
+
+				if (m_ShotFlg)
+				{
+					m_Rect.y = 0;
+				}
 			}
 		}
 		break;
@@ -225,6 +257,14 @@ void c_Boss::Update(Math::Vector2 Pos)
 			{
 				m_UD = true;
 			}
+		}
+	}
+
+	for (int i = 0; i < mp_BigGhost.size(); i++)
+	{
+		if (m_Life <= 0)
+		{
+			mp_BigGhost[i]->BackGhost();
 		}
 	}
 
@@ -293,6 +333,25 @@ void c_Boss::Update(Math::Vector2 Pos)
 		{
 			delete* it;
 			it = mp_Spider.erase(it);
+			m_ShotFlg = false;
+		}
+		else
+		{
+			++it;
+		}
+	}
+
+	for (int i = 0; i < mp_Thorns.size(); i++) {
+		mp_Thorns[i]->Update();
+	}
+
+	for (auto it = mp_Thorns.begin(); it != mp_Thorns.end(); )
+	{
+		if (!(*it)->GetFlg())
+		{
+			delete* it;
+			it = mp_Thorns.erase(it);
+			m_ShotFlg = false;
 		}
 		else
 		{
@@ -356,6 +415,10 @@ void c_Boss::Draw()
 
 	for (int i = 0; i < mp_Spider.size(); i++) {
 		mp_Spider[i]->Draw();
+	}
+
+	for (int i = 0; i < mp_Thorns.size(); i++) {
+		mp_Thorns[i]->Draw();
 	}
 
 	if (m_LastFlg)

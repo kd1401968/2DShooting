@@ -40,7 +40,7 @@ private:
 
 	Math::Matrix m_BackMat;
 	Math::Matrix m_ChainMat[3];
-	Math::Matrix m_PlayerMat[3];
+	Math::Matrix m_PlayerMat[13];
 	Math::Matrix m_BulletMat;
 	Math::Matrix m_SignMat[2];
 	Math::Matrix m_PresonMat;
@@ -51,6 +51,11 @@ private:
 	int m_PlayerRectX[3];
 
 	Math::Vector2 m_KeyRect[2];
+
+	Math::Vector2 m_DeathPos[10];
+	int m_DeathRect[10];
+	int m_DeathRotate[10];
+	int m_LR[10];
 
 	int m_Cnt;
 

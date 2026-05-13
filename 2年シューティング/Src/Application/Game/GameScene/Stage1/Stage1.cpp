@@ -95,12 +95,12 @@ void c_Stage1::Update()
 		}
 		else
 		{
-			if (rand() % 30 == 0)
+			if (rand() % 35 == 0)
 			{
 				Math::Vector2 GhostPos = { 640.0f + 64.0f,(float)((rand() % 537) - 238) };
 				mp_Ghost.push_back(new c_Ghost(GhostPos));
 			}
-			if (rand() % 45 == 0)
+			if (rand() % 65 == 0)
 			{
 				mp_Eye.push_back(new c_Eye(640.0f + 64.0f, (float)((rand() % 537) - 238), (rand() % 101 + 80) / 1000.0f));
 			}

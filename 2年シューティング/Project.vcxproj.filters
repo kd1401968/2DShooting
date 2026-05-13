@@ -124,6 +124,9 @@
     <Filter Include="Src\Application\Game\GameObject\Bullet\EBullet\Spider">
       <UniqueIdentifier>{b8488275-a612-466b-945f-a875d95f613c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\Game\GameObject\Bullet\EBullet\Thorns">
+      <UniqueIdentifier>{f65b2260-280d-4558-b2cd-a7d188eb9f04}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -288,6 +291,9 @@
     <ClInclude Include="Src\Application\Game\GameObject\Bullet\EBullet\Spider\Spider.h">
       <Filter>Src\Application\Game\GameObject\Bullet\EBullet\Spider</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\Game\GameObject\Bullet\EBullet\Thorns\Thorns.h">
+      <Filter>Src\Application\Game\GameObject\Bullet\EBullet\Thorns</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -412,6 +418,9 @@
     </ClCompile>
     <ClCompile Include="Src\Application\Game\GameObject\Bullet\EBullet\Spider\Spider.cpp">
       <Filter>Src\Application\Game\GameObject\Bullet\EBullet\Spider</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Game\GameObject\Bullet\EBullet\Thorns\Thorns.cpp">
+      <Filter>Src\Application\Game\GameObject\Bullet\EBullet\Thorns</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

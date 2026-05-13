@@ -13,6 +13,8 @@
 #include"Application/Result/Result.h"
 #include "Application/Title/Title.h"
 #include "Application/Game/GameObject/Enemy/BigGhost/BigGhost.h"
+#include "Application/Game/GameObject/Bullet/EBullet/Thorns/Thorns.h"
+#include "Application/Game/GameObject/Bullet/EBullet/Spider/Spider.h"
 void c_Stage2::Init(int PlayerLife, int Score)
 {
 	m_StartPos = { -800.0f,0.0f };
@@ -254,6 +256,13 @@ void c_Stage2::HitDec2()
 			m_Player->SetBulletFlg(Hit, i);
 			m_GameUI->SetScore(200);
 			m_Boss->SetBossLife();
+			if (m_Boss->GetLast())
+			{
+				for (int i = 0; i < m_Boss->mp_BigGhost.size(); i++)
+				{
+					m_Boss->mp_BigGhost[i]->GoGhost();
+				}
+			}
 			mp_Explosion.push_back(new c_Explosion());
 			mp_Explosion.back()->Init(BulletPos, 1.0f);
 			break;
@@ -358,6 +367,55 @@ void c_Stage2::HitDec2()
 				mp_Explosion.push_back(new c_Explosion());
 				mp_Explosion.back()->Init(BulletPos, 1.0f);
 				break;
+			}
+		}
+	}
+
+	{
+		for (int j = 0; j < m_Boss->mp_Thorns.size(); j++)
+		{
+			if (m_Boss->mp_Thorns[j]->GetPos().y == 145&&m_Boss->mp_Thorns[j]->GetAttackFlg())
+			{
+				bool Hit = true;
+				Math::Vector2 PlayerPos = m_Player->GetPos();
+				Math::Vector2 PlayerRadius = m_Player->GetRadius();
+				Math::Vector2 ThornsPos = m_Boss->mp_Thorns[j]->GetHitPos();
+				Math::Vector2 ThornsRadius = m_Boss->mp_Thorns[j]->GetRadius();
+
+				Hit = m_Hit.BoxInHit(PlayerPos, PlayerRadius, ThornsPos, ThornsRadius);
+
+				if (Hit)
+				{
+					m_Player->SetLife();
+					mp_Explosion.push_back(new c_Explosion());
+					mp_Explosion.back()->Init(PlayerPos, 1.0f);
+					m_Boss->mp_Thorns[j]->SetAttackFlg(false);
+					break;
+				}
+			}
+		}
+	}
+	{
+		for (int j = 0; j < m_Boss->mp_Spider.size(); j++)
+		{
+			if (m_Boss->mp_Spider[j]->GetPos().y == -180 && m_Boss->mp_Spider[j]->GetAttackFlg())
+			{
+				bool Hit = true;
+				Math::Vector2 PlayerPos = m_Player->GetPos();
+				Math::Vector2 PlayerRadius = m_Player->GetRadius();
+				Math::Vector2 SpiderPos = m_Boss->mp_Spider[j]->GetHitPos();
+				Math::Vector2 SpiderRadius = m_Boss->mp_Spider[j]->GetRadius();
+
+				Hit = m_Hit.BoxInHit(PlayerPos, PlayerRadius, SpiderPos, SpiderRadius);
+
+				if (Hit)
+				{
+					//m_Player->SetLife();
+					mp_Explosion.push_back(new c_Explosion());
+					mp_Explosion.back()->Init(PlayerPos, 1.0f);
+					//m_Boss->mp_Spider[j]->SetAttackFlg(false);
+					break;
+				}
 			}
 		}
 	}

@@ -33,6 +33,22 @@ void c_Start::Init(int PlayerLife,int Score)
 	m_Cnt=3;
 
 	m_InvFlg = false;
+
+	for (int i = 0; i < 10; i++)
+	{
+		
+        m_DeathPos[i] = { (float)(rand() % 1280 - 640), -250.0f };
+		m_DeathRotate[i] = rand() % 181;
+		m_DeathRect[i] = rand() % 8;
+		if (rand() % 2 == 0)
+		{
+			m_LR[i] = 1;
+		}
+		else
+		{
+			m_LR[i] = -1;
+		}
+	}
 	
 }
 
@@ -254,6 +270,14 @@ void c_Start::Update()
 		m_PlayerMat[i] = S * T;
 	}
 
+	for (int i = 0; i < 10; i++)
+	{
+		S = Math::Matrix::CreateScale(0.8 * m_LR[i], 0.8, 1);
+		R = Math::Matrix::CreateRotationZ(DirectX::XMConvertToRadians(m_DeathRotate[i]));
+		T = Math::Matrix::CreateTranslation(m_DeathPos[i].x, m_DeathPos[i].y, 0);
+		m_PlayerMat[i+3] = S * R * T;
+	}
+
 	S = Math::Matrix::CreateScale(0.8 , 0.8, 1);
 	T = Math::Matrix::CreateTranslation(-370, 110, 0);
 	m_BulletMat = S * T;
@@ -301,6 +325,13 @@ void c_Start::Draw()
 		rect = { m_PlayerRectX[i]*79,0,79,69};
 		color = { 1.0f,1.0f,1.0f,1.0f };
 		SHADER.m_spriteShader.SetMatrix(m_PlayerMat[i]);
+		SHADER.m_spriteShader.DrawTex(&m_PlayerTex, 0, 0, &rect, &color);
+	}
+	for (int i = 0; i < 10; i++)
+	{
+		rect = { m_DeathRect[i] * 79,0,79,69 };
+		color = { 0.8f,0.8f,0.8f,0.8f };
+		SHADER.m_spriteShader.SetMatrix(m_PlayerMat[i+3]);
 		SHADER.m_spriteShader.DrawTex(&m_PlayerTex, 0, 0, &rect, &color);
 	}
 

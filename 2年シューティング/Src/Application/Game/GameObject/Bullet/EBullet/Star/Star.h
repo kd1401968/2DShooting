@@ -3,7 +3,7 @@
 class c_Star : public c_GameObjectBase{
 public:
 
-	c_Star(Math::Vector2 Pos,Math::Vector2 Target) { Init(Pos,Target); }
+	c_Star(Math::Vector2 Pos,Math::Vector2 Target,int LR) { Init(Pos,Target,LR); }
 	~c_Star() override{ Release(); }
 
 	void Update()override;
@@ -17,7 +17,7 @@ public:
 
 private:
 
-	void Init(Math::Vector2 Pos, Math::Vector2 Target);
+	void Init(Math::Vector2 Pos, Math::Vector2 Target,int LR);
 	void Release()override;
 
 	KdTexture m_Tex;

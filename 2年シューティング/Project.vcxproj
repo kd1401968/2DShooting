@@ -165,6 +165,7 @@
     <ClInclude Include="Src\Application\Game\GameObject\Bullet\EBullet\Mukade\Mukade.h" />
     <ClInclude Include="Src\Application\Game\GameObject\Bullet\EBullet\Spider\Spider.h" />
     <ClInclude Include="Src\Application\Game\GameObject\Bullet\EBullet\Star\Star.h" />
+    <ClInclude Include="Src\Application\Game\GameObject\Bullet\EBullet\Thorns\Thorns.h" />
     <ClInclude Include="Src\Application\Game\GameObject\Bullet\PBullet\PBullet.h" />
     <ClInclude Include="Src\Application\Game\GameObject\Enemy\BigGhost\BigGhost.h" />
     <ClInclude Include="Src\Application\Game\GameObject\Enemy\Boss\Boss.h" />
@@ -213,6 +214,7 @@
     <ClCompile Include="Src\Application\Game\GameObject\Bullet\EBullet\Mukade\Mukade.cpp" />
     <ClCompile Include="Src\Application\Game\GameObject\Bullet\EBullet\Spider\Spider.cpp" />
     <ClCompile Include="Src\Application\Game\GameObject\Bullet\EBullet\Star\Star.cpp" />
+    <ClCompile Include="Src\Application\Game\GameObject\Bullet\EBullet\Thorns\Thorns.cpp" />
     <ClCompile Include="Src\Application\Game\GameObject\Bullet\PBullet\PBullet.cpp" />
     <ClCompile Include="Src\Application\Game\GameObject\Enemy\BigGhost\BigGhost.cpp" />
     <ClCompile Include="Src\Application\Game\GameObject\Enemy\Boss\Boss.cpp" />

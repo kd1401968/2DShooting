@@ -18,7 +18,7 @@ void c_Star::Update()
 	}
 	if (m_Speed.y > 0)
 	{
-		if (m_Pos.y >= 350) m_Flg = false;
+		if (m_Pos.y >= 400) m_Flg = false;
 	}
 	else
 	{
@@ -76,13 +76,21 @@ void c_Star::Draw()
 	SHADER.m_spriteShader.DrawCircle(m_Pos.x, m_Pos.y, m_Radius.x, &color, true);*/
 }
 
-void c_Star::Init(Math::Vector2 Pos, Math::Vector2 Target)
+void c_Star::Init(Math::Vector2 Pos, Math::Vector2 Target,int LR)
 {
 	m_Tex.Load("Texture/Star.png");
 
 	m_Pos = Pos;
 	m_TGPos = Target;
-	float angleDeg = -90.0f - (rand() % 91); // -90 Å` -180 ÇÃä‘
+	float angleDeg;
+	if (LR == 1)
+	{
+		angleDeg = (-90.0f - (rand() % 91)); // -90 Å` -180 ÇÃä‘
+	}
+	else 
+	{
+		angleDeg = (0.0f - (rand() % 91));
+	}
 	float angleRad = DirectX::XMConvertToRadians(angleDeg);
 
 	float speed = 8.0f;

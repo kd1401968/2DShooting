@@ -13,6 +13,7 @@ class c_Star;
 class c_Mukade;
 class c_Gate;
 class c_BigGhost;
+class c_Thorns;
 class c_Spider;
 class c_Boss :public c_GameObjectBase
 {
@@ -37,6 +38,7 @@ public:
 	std::vector<c_Mukade*> mp_Mukade;
 	std::vector<c_BigGhost*> mp_BigGhost;
 	std::vector<c_Spider*> mp_Spider;
+	std::vector<c_Thorns*> mp_Thorns;
 
 private:
 

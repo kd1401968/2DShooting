@@ -1,6 +1,6 @@
-#include "Spider.h"
+#include "Thorns.h"
 
-void c_Spider::Update()
+void c_Thorns::Update()
 {
 	m_Count++;
 	if (m_Count <= 40)
@@ -18,36 +18,24 @@ void c_Spider::Update()
 	}
 	else
 	{
-
-		m_AddBoxPos.y -= 2;
-
-		// ★ -180 に到達したら止める
-		if (m_AddBoxPos.y <= -180 && !m_EndFlg)
+		m_AddBoxPos.y+=2;
+		if (m_AddBoxPos.y >= 145&&!m_EndFlg)
 		{
-			m_AddBoxPos.y = -180;
-			m_SpiderSpeed.y--;
-			m_SpiderPos += m_SpiderSpeed;
-			if (m_SpiderPos.y <= 80)
+			m_AddBoxPos.y = 145;
+			m_ThornsPos.y = -165;
+			if (m_Count >= 130)
 			{
-				m_SpiderPos.y = 80;
-				// ★ 到達後のカウント開始
-				if (m_Count >= 165)
-				{
-					m_EndFlg = true; // 次のフェーズへ
-				}
+				m_EndFlg = true;
 			}
 		}
-
-
 	}
-
 
 	if (m_EndFlg)
 	{
-		m_SpiderPos.y += 6;
-		if (m_SpiderPos.y >= 420)
+		m_ThornsPos.y-=6;
+		if (m_ThornsPos.y <= -480)
 		{
-			m_SpiderPos.y = 420;
+			m_ThornsPos.y = -480;
 			m_AddGateScale.x -= 0.2f;
 			if (m_AddGateScale.x <= 0.0f)
 			{
@@ -70,25 +58,25 @@ void c_Spider::Update()
 		m_GRectX = 0;
 	}
 	//m_GateScale = { 5,22 };
-	S = Math::Matrix::CreateScale(m_AddGateScale.x, m_AddGateScale.y, 1);
+	S = Math::Matrix::CreateScale(m_AddGateScale.x*-1, m_AddGateScale.y, 1);
 	R = Math::Matrix::CreateRotationZ(DirectX::XMConvertToRadians(90));
 	T = Math::Matrix::CreateTranslation(m_GatePos[0].x, m_GatePos[0].y, 0);
 	m_GateMat[0] = S * R * T;
 
 	for (int i = 1; i < 3; i++)
 	{
-		S = Math::Matrix::CreateScale(m_AddGateScale.x, m_AddGateScale.y, 1);
+		S = Math::Matrix::CreateScale(m_AddGateScale.x*-1, m_AddGateScale.y, 1);
 		R = Math::Matrix::CreateRotationZ(DirectX::XMConvertToRadians(90));
-		T = Math::Matrix::CreateTranslation(m_GatePos[i].x + m_GatePos[0].x, m_GatePos[i].y + m_GatePos[0].y - 80, 0);
+		T = Math::Matrix::CreateTranslation(m_GatePos[i].x + m_GatePos[0].x, m_GatePos[i].y + m_GatePos[0].y + 80, 0);
 		m_GateMat[i] = S * R * T;
 	}
 
-	S = Math::Matrix::CreateScale(0.28f, 0.2f, 1);
-	T = Math::Matrix::CreateTranslation(m_SpiderPos.x + 20, m_SpiderPos.y, 0);
-	m_SpiderMat = S * T;
+	S = Math::Matrix::CreateScale(0.6, 0.5, 1);
+	T = Math::Matrix::CreateTranslation(m_ThornsPos.x ,m_ThornsPos.y, 0);
+	m_ThornsMat = S * T;
 }
 
-void c_Spider::Draw()
+void c_Thorns::Draw()
 {
 	Math::Rectangle rect;
 	Math::Color color = { 1.0f,1.0f,1.0f,1.0f };
@@ -105,28 +93,20 @@ void c_Spider::Draw()
 		SHADER.m_spriteShader.SetMatrix(m_GateMat[2]);
 		SHADER.m_spriteShader.DrawTex(&m_GateTex, 0, 0, &rect, &color);
 
-
-		if (m_AddBoxPos.y != -180 && !m_EndFlg)
+		if (m_AddBoxPos.y != 145&&!m_EndFlg)
 		{
 			color = { 1.0f,0.0f,0.0f,0.3f };
 			SHADER.m_spriteShader.SetMatrix(Math::Matrix::Identity);
-			SHADER.m_spriteShader.DrawBox(m_BoxPos.x, m_BoxPos.y, 394, 180, &color, true);
+			SHADER.m_spriteShader.DrawBox(m_BoxPos.x, m_BoxPos.y, 394, 145, &color, true);
 			color = { 1.0f,0.0f,0.0f,0.2f };
 			SHADER.m_spriteShader.SetMatrix(Math::Matrix::Identity);
-			SHADER.m_spriteShader.DrawBox(m_AddBoxPos.x, m_AddBoxPos.y + 360, 394, m_AddBoxPos.y, &color, true);
+			SHADER.m_spriteShader.DrawBox(m_AddBoxPos.x, m_AddBoxPos.y - 290, 394, m_AddBoxPos.y, &color, true);
 		}
 
-		for (int i = 0; i < 6; i++)
-		{
-			color = { 1.0f,1.0f,1.0f,1.0f };
-			SHADER.m_spriteShader.SetMatrix(Math::Matrix::Identity);
-			SHADER.m_spriteShader.DrawLine(m_WPos[i].x, m_WPos[i].y, m_WPos[i].x, m_SpiderPos.y, &color);
-		}
-
-		rect = { 0,0,477 * 6,979 };
+		rect = {0,0,1350,784};
 		color = { 0.3f,0.3f,0.3f,1.0f };
-		SHADER.m_spriteShader.SetMatrix(m_SpiderMat);
-		SHADER.m_spriteShader.DrawTex(&m_SpiderTex, 0, 0, &rect, &color);
+		SHADER.m_spriteShader.SetMatrix(m_ThornsMat);
+		SHADER.m_spriteShader.DrawTex(&m_ThornsTex, 0, 0, &rect, &color);
 
 		color = { 1.0f,1.0f,1.0f,1.0f };
 		rect = { ((int)m_GRectX * 64) + 32, 0, 32, 64 };
@@ -136,34 +116,28 @@ void c_Spider::Draw()
 
 
 }
-void c_Spider::Init()
+void c_Thorns::Init()
 {
 	m_GateTex.Load("Texture/Gate.png");
-	m_SpiderTex.Load("Texture/Spider.png");
+	m_ThornsTex.Load("Texture/Thorns.png");
 
 	m_GateScale = { 5.0f,22.0f };
 	m_AddGateScale = { 0,0 };
-	m_GatePos[0] = { 20,350 };
-	m_GatePos[1] = { 0,160 };
+	m_GatePos[0] = { 20,-270 };
+	m_GatePos[1] = { 0,-160 };
 	m_GatePos[2] = { 0,0 };
 	m_AddBoxPos = { 40,0 };
-	m_BoxPos = { 40,180 };
-	m_SpiderPos = { 20,400 };
-	m_SpiderSpeed = { 0,0 };
+	m_BoxPos = { 40,-145 };
+	m_ThornsPos = { 50,-400 };
 
 	m_Count = 0;
-
-	for (int i = 0;i < 6; i++)
-	{
-		m_WPos[i] = {-295+(float)i*134,360};
-	}
 
 	m_EndFlg = false;
 	m_Flg = true;
 	m_AttackFlg = true;
 }
-void c_Spider::Release()
+void c_Thorns::Release()
 {
 	m_GateTex.Release();
-	m_SpiderTex.Release();
+	m_ThornsTex.Release();
 }
