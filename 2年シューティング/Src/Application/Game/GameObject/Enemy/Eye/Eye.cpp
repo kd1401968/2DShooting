@@ -146,6 +146,7 @@ void c_Eye::Draw()
 	SHADER.m_spriteShader.SetMatrix(Eye2Mat);
 	SHADER.m_spriteShader.DrawTex(&Eye2Tex, 0, 0, &rect, &color);
 
+
 	if (m_IceBullet)
 	{
 		m_IceBullet->Draw();

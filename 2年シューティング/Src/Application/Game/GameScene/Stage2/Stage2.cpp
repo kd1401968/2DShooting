@@ -12,6 +12,7 @@
 #include "Application/Scene.h"
 #include"Application/Result/Result.h"
 #include "Application/Title/Title.h"
+#include "Application/Game/GameObject/Enemy/BigGhost/BigGhost.h"
 void c_Stage2::Init(int PlayerLife, int Score)
 {
 	m_StartPos = { -800.0f,0.0f };
@@ -37,6 +38,9 @@ void c_Stage2::Init(int PlayerLife, int Score)
 		m_Rain.push_back(new c_Rain(m_RainTex));
 	}
 
+	m_Count = 0;
+	m_DEathCount = 0;
+	m_SkipFlg = false;
 }
 void c_Stage2::Release()
 {
@@ -66,9 +70,8 @@ void c_Stage2::Update()
 
 	if (m_Player->GetLife() == 0)
 	{
-		static int Count = 0;
-		Count++;
-		if (Count >= 120)
+		m_Count++;
+		if (m_Count >= 120)
 		{
 			SCENE.ChangeScene(new c_Result(m_GameUI->GetScore(), false));
 		}
@@ -105,11 +108,10 @@ void c_Stage2::Update()
 
 	if (m_Boss->GetLife()==0)
 	{
-		static int cnt = 0;
-		cnt++;
-		if (cnt % 2 == 0)
+		m_DEathCount++;
+		if (m_DEathCount % 2 == 0)
 		{
-			if (cnt <= 60)
+			if (m_DEathCount <= 60)
 			{
 				Math::Vector2 bossPos = m_Boss->GetPos();
 
@@ -126,11 +128,21 @@ void c_Stage2::Update()
 	}
 	else
 	{
-		if(m_Boss->GetLast())
+		Math::Vector2 BossPos = m_Boss->GetPos();
+		Math::Vector2 PlayerPos = m_Player->GetPos();
+
+		if (!m_Boss->GetLast()&&m_Boss->GetAction()<=e_Action::ActionB)
 		{
-			if (m_Player->GetPos().x - m_Player->GetRadius().x <= m_Boss->GetPos().x)
+			if (PlayerPos.x >= BossPos.x)
 			{
-				m_Player->SetPos({ m_Boss->GetPos().x + m_Player->GetRadius().x,m_Player->GetPos().y });
+				m_Player->SetPos({ BossPos.x , PlayerPos.y });
+			}
+		}
+		else
+		{
+			if (PlayerPos.x <= BossPos.x)
+			{
+				m_Player->SetPos({ BossPos.x , PlayerPos.y });
 			}
 		}
 	}
@@ -208,21 +220,20 @@ void c_Stage2::Draw()
 
 void c_Stage2::HitDec2()
 {
-	static bool alreadyDone = false; // 一度だけ実行するためのフラグ
 
 	bool nowEnd = m_Boss->GetDeath();
 
-	if (!alreadyDone && nowEnd)
+	if (!m_SkipFlg && nowEnd)
 	{
 		// ★ここが一回だけ実行される処理
 		m_GameUI->SetScore(50000);
 		m_Player->SetNextFlg(true);
 
-		alreadyDone = true; // 二度と入らないようにする
+		m_SkipFlg = true; // 二度と入らないようにする
 	}
 
 	// ★ここより下の処理は、alreadyDone が true なら全部スキップ
-	if (alreadyDone)
+	if (m_SkipFlg)
 	{
 		return; // ここで関数を抜ける
 	}
@@ -251,7 +262,7 @@ void c_Stage2::HitDec2()
 
 	{
 		bool Hit = true;
-		Math::Vector2 BossPos = m_Boss->GetPos();
+		Math::Vector2 BossPos = m_Boss->GetPos(); 
 		Math::Vector2 PlayerPos = m_Player->GetPos();
 		Hit = m_Hit.BulletHit(BossPos, PlayerPos, m_Boss->GetRadius(), m_Player->GetRadius());
 		if (!Hit && m_Player->GetAlpha() >= 1.0f)
@@ -274,9 +285,25 @@ void c_Stage2::HitDec2()
 			{
 				m_Player->SetPos({ BossPos.x , PlayerPos.y });
 			}
+			for (int i = 0; i < m_Boss->mp_BigGhost.size(); i++)
+			{
+				Math::Vector2 BigGhostPos = m_Boss->mp_BigGhost[i]->GetPos();
+				if (PlayerPos.x  >= BigGhostPos.x - m_Boss->mp_BigGhost[i]->GetRadius().x)
+				{
+					m_Player->SetPos({ BigGhostPos.x - m_Boss->mp_BigGhost[i]->GetRadius().x , PlayerPos.y });
+				}
+				Hit = m_Hit.BulletHit(BigGhostPos, PlayerPos, { m_Boss->mp_BigGhost[i]->GetRadius().x,m_Boss->mp_BigGhost[i]->GetRadius().y }, m_Player->GetRadius());
+				if (!Hit && m_Player->GetAlpha() >= 1.0f&&m_Boss->GetLife()!=0)
+				{
+					m_Player->SetLife();
+					mp_Explosion.push_back(new c_Explosion());
+					mp_Explosion.back()->Init(PlayerPos, 1.0f);
+				}
+			}
+
 		}
 	}
-
+	
 
 	for (int i = 0; i < m_Boss->mp_Star.size(); i++)
 	{
@@ -313,4 +340,25 @@ void c_Stage2::HitDec2()
 		}
 	}
 
+	//プレイヤーの弾とビッグゴーストの当たり判定
+	for (int i = 0; i < m_Player->mp_Bullet.size(); i++)
+	{
+		for (int j= 0; j < m_Boss->mp_BigGhost.size(); j++)
+		{
+			bool Hit = true;
+			Math::Vector2 BulletPos = m_Player->mp_Bullet[i]->GetPos();
+			Math::Vector2 GhostPos = m_Boss->mp_BigGhost[j]->GetPos();
+
+			Hit = m_Hit.BulletHit(BulletPos, GhostPos, m_Player->mp_Bullet[i]->GetRadius(), m_Boss->mp_BigGhost[j]->GetRadius());
+
+			if (!Hit)
+			{
+				m_Player->SetBulletFlg(Hit, i);
+				m_Boss->mp_BigGhost[j]->BackGhost();
+				mp_Explosion.push_back(new c_Explosion());
+				mp_Explosion.back()->Init(BulletPos, 1.0f);
+				break;
+			}
+		}
+	}
 }

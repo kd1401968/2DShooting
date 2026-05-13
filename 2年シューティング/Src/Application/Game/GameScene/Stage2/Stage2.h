@@ -49,6 +49,10 @@ private:
 
 	bool m_StartFlg;
 
+	int m_Count;
+	int m_DEathCount;
+	bool m_SkipFlg;
+
 	c_Boss* m_Boss = nullptr;
 
 	//パーティクル

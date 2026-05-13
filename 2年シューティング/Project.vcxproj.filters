@@ -121,6 +121,9 @@
     <Filter Include="Src\Application\Game\GameObject\Bullet\EBullet\Mukede">
       <UniqueIdentifier>{1c7cf1f3-6964-4284-8591-5ea400d8fa30}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\Game\GameObject\Bullet\EBullet\Spider">
+      <UniqueIdentifier>{b8488275-a612-466b-945f-a875d95f613c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -282,6 +285,9 @@
     <ClInclude Include="Src\Application\Game\GameObject\Bullet\EBullet\Mukade\Mukade.h">
       <Filter>Src\Application\Game\GameObject\Bullet\EBullet\Mukede</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\Game\GameObject\Bullet\EBullet\Spider\Spider.h">
+      <Filter>Src\Application\Game\GameObject\Bullet\EBullet\Spider</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -403,6 +409,9 @@
     </ClCompile>
     <ClCompile Include="Src\Application\Game\GameObject\Bullet\EBullet\Mukade\Mukade.cpp">
       <Filter>Src\Application\Game\GameObject\Bullet\EBullet\Mukede</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Game\GameObject\Bullet\EBullet\Spider\Spider.cpp">
+      <Filter>Src\Application\Game\GameObject\Bullet\EBullet\Spider</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -163,6 +163,7 @@
     <ClInclude Include="Src\Application\Game\Game.h" />
     <ClInclude Include="Src\Application\Game\GameObject\Bullet\EBullet\IceBullet\IceBullet.h" />
     <ClInclude Include="Src\Application\Game\GameObject\Bullet\EBullet\Mukade\Mukade.h" />
+    <ClInclude Include="Src\Application\Game\GameObject\Bullet\EBullet\Spider\Spider.h" />
     <ClInclude Include="Src\Application\Game\GameObject\Bullet\EBullet\Star\Star.h" />
     <ClInclude Include="Src\Application\Game\GameObject\Bullet\PBullet\PBullet.h" />
     <ClInclude Include="Src\Application\Game\GameObject\Enemy\BigGhost\BigGhost.h" />
@@ -210,6 +211,7 @@
     <ClCompile Include="Src\Application\Game\Game.cpp" />
     <ClCompile Include="Src\Application\Game\GameObject\Bullet\EBullet\IceBullet\IceBullet.cpp" />
     <ClCompile Include="Src\Application\Game\GameObject\Bullet\EBullet\Mukade\Mukade.cpp" />
+    <ClCompile Include="Src\Application\Game\GameObject\Bullet\EBullet\Spider\Spider.cpp" />
     <ClCompile Include="Src\Application\Game\GameObject\Bullet\EBullet\Star\Star.cpp" />
     <ClCompile Include="Src\Application\Game\GameObject\Bullet\PBullet\PBullet.cpp" />
     <ClCompile Include="Src\Application\Game\GameObject\Enemy\BigGhost\BigGhost.cpp" />

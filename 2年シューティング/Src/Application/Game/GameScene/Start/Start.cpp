@@ -31,6 +31,8 @@ void c_Start::Init(int PlayerLife,int Score)
 	m_Score = Score;
 
 	m_Cnt=3;
+
+	m_InvFlg = false;
 	
 }
 
@@ -126,14 +128,13 @@ void c_Start::Update()
 	}
 	else
 	{
-		static bool inv = false;
-		if (!inv)
+		if (!m_InvFlg)
 		{
 			m_ArrowAlpha += 0.005f;
 			if (m_ArrowAlpha >= 0.5f)
 			{
 				m_ArrowAlpha = 0.5f;
-				inv = true;
+				m_InvFlg = true;
 			}
 		}
 		else
@@ -142,7 +143,7 @@ void c_Start::Update()
 			if (m_ArrowAlpha <= 0.0f)
 			{
 				m_ArrowAlpha = 0.0f;
-				inv = false;
+				m_InvFlg = false;
 			}
 		}
 	}

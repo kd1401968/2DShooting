@@ -56,6 +56,8 @@ private:
 
 	float m_ArrowAlpha;
 
+	bool m_InvFlg;
+
 
 	Math::Vector2 m_BackPos;
 	float m_BackMoveX;

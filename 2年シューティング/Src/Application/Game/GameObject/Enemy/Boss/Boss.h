@@ -13,6 +13,7 @@ class c_Star;
 class c_Mukade;
 class c_Gate;
 class c_BigGhost;
+class c_Spider;
 class c_Boss :public c_GameObjectBase
 {
 public:
@@ -35,6 +36,7 @@ public:
 	std::vector<c_Star*> mp_Star;
 	std::vector<c_Mukade*> mp_Mukade;
 	std::vector<c_BigGhost*> mp_BigGhost;
+	std::vector<c_Spider*> mp_Spider;
 
 private:
 
@@ -45,13 +47,13 @@ private:
 	KdTexture m_GateTex;
 
 	Math::Matrix m_Mat;
-	Math::Matrix m_GateMat[3];
+	Math::Matrix m_GateMat[2];
 
 	Math::Vector2 m_Pos;
 	Math::Vector2 m_Scale;
 	Math::Vector2 m_Radius;
 	Math::Vector2 m_Rect;
-	Math::Vector2 m_GatePos[3];
+	Math::Vector2 m_GatePos[2];
 	Math::Vector2 m_GateScale;
 
 	e_Action m_Action;
